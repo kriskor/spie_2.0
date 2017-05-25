@@ -5,7 +5,7 @@ namespace App\Http\Controllers\ModuloAdmindatabase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class dashboardController extends Controller
+class DashboardController extends Controller
 {
   /**
    * Create a new controller instance.

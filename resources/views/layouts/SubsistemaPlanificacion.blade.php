@@ -11,9 +11,9 @@
     <title>SPIE - Subsistema de Planificación</title>
     <!-- Bootstrap Core CSS -->
     <link href="/assets_admin_one/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets_admin_one/plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
+    <link href="/plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="/assets_admin_one/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
     <!-- animation CSS -->
     <link href="/assets_admin_one/css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -74,25 +74,25 @@
                             <li>
                                 <div class="message-center">
                                     <a href="#">
-                                        <div class="user-img"> <img src="/assets_admin_one/plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
+                                        <div class="user-img"> <img src="/plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
                                         <div class="mail-contnet">
                                             <h5>Pavan kumar</h5>
                                             <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
                                     </a>
                                     <a href="#">
-                                        <div class="user-img"> <img src="/assets_admin_one/plugins/images/users/sonu.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
+                                        <div class="user-img"> <img src="/plugins/images/users/sonu.jpg" alt="user" class="img-circle"> <span class="profile-status busy pull-right"></span> </div>
                                         <div class="mail-contnet">
                                             <h5>Sonu Nigam</h5>
                                             <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
                                     </a>
                                     <a href="#">
-                                        <div class="user-img"> <img src="/assets_admin_one/plugins/images/users/arijit.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
+                                        <div class="user-img"> <img src="/plugins/images/users/arijit.jpg" alt="user" class="img-circle"> <span class="profile-status away pull-right"></span> </div>
                                         <div class="mail-contnet">
                                             <h5>Arijit Sinh</h5>
                                             <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
                                     </a>
                                     <a href="#">
-                                        <div class="user-img"> <img src="/assets_admin_one/plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
+                                        <div class="user-img"> <img src="/plugins/images/users/pawandeep.jpg" alt="user" class="img-circle"> <span class="profile-status offline pull-right"></span> </div>
                                         <div class="mail-contnet">
                                             <h5>Pavan kumar</h5>
                                             <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
@@ -164,7 +164,7 @@
 
                     <!-- Menu para perfiles del usuario
                     <li class="dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="/assets_admin_one/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b> </a>
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="/plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle"><b class="hidden-xs">Steave</b> </a>
                         <ul class="dropdown-menu dropdown-user animated flipInY">
                             <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
@@ -365,13 +365,13 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
-    <script src="/assets_admin_one/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/assets_admin_one/bootstrap/dist/js/tether.min.js"></script>
     <script src="/assets_admin_one/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/assets_admin_one/plugins/bower_components/bootstrap-extension/js/bootstrap-extension.min.js"></script>
+    <script src="/plugins/bower_components/bootstrap-extension/js/bootstrap-extension.min.js"></script>
     <!-- Menu Plugin JavaScript -->
-    <script src="/assets_admin_one/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <script src="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
     <!--slimscroll JavaScript -->
     <script src="/assets_admin_one/js/jquery.slimscroll.js"></script>
     <!--Wave Effects -->
@@ -379,7 +379,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="/assets_admin_one/js/custom.min.js"></script>
     <!--Style Switcher -->
-    <script src="/assets_admin_one/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+    <script src="/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
     @stack('script-head')
 </body>
 
