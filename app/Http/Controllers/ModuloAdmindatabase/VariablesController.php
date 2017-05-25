@@ -50,13 +50,17 @@ class VariablesController extends Controller
     if($request->ajax()) {
       $groupRef = "";
       $datoRef = "";
+      $sw=0;
       if($request->campo_referencial_1 !=""){
         $groupRef .= $request->campo_referencial_1.", ";
         $datoRef = "v.".$request->campo_referencial_1." as origen_referencia,";
+        $sw=1;
       }
       if($request->campo_referencial_2 !=""){
-        $groupRef .= $request->campo_referencial_2.", ";
-        $datoRef = "(v.".$request->campo_referencial_1."||'/'||v.".$request->campo_referencial_2.") as origen_referencia,";
+        $groupRef .= $request->campo_referencial_1.", ".$request->campo_referencial_2.", ";
+        //$datoRef = "(v.".$request->campo_referencial_1."||'/'||v.".$request->campo_referencial_2.") as origen_referencia,";
+        $datoRef = "v.".$request->campo_referencial_1.", v.".$request->campo_referencial_2.",";
+        $sw=2;
       }
 
 
@@ -74,11 +78,11 @@ class VariablesController extends Controller
         $datosV = array();
         $i = 1;
 
-        $sw ="";
         $campo_validado= "";
         $observaciones= "";
         $id_resultado= "";
         $nom_resultado= "";
+        $origen_referencia ="";
         $i=1;
        foreach ($result as $r) {
 
@@ -107,10 +111,13 @@ class VariablesController extends Controller
 
                        }
 
-                       if($datoRef)
-                       $origen_referencia=$r->origen_referencia;
-                       else
-                       $origen_referencia ="";
+                       if($sw==1){
+                         $origen_referencia = $r->origen_referencia;
+                       }elseif($sw==2){
+                         $origen_referencia = $r->r_departamento."/".$r->r_provincia;
+                       }
+
+                
                 $datosV[$i] = array(
                           'id_valor' => $i,
                           'origen_referencia' => $origen_referencia,
