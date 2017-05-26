@@ -78,7 +78,8 @@ class CatalogoController extends Controller
   {
 
     if($request->ajax()) {
-          $clasificacion = \DB::select("SELECT 'Todos' as clasificacion
+          $clasificacion = \DB::connection('dbestadistica')
+                          ->select("SELECT 'Todos' as clasificacion
                                         UNION ALL
                                         select clasificacion
                                         FROM resultados

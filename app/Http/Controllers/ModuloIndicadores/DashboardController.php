@@ -31,12 +31,13 @@ class DashboardController extends Controller
   {
 
     if($request->ajax()) {
-          $listaIP = \DB::select("SELECT p.cod_p,(p.nombre||': '||p.descripcion) as nombre,count(i.id_indicador) as total
+          $listaIP = \DB::connection('dbestadistica')
+                    ->select("SELECT p.cod_p,(p.nombre||': '||p.descripcion) as nombre,count(i.id_indicador) as total
                                   FROM pilares p
                                   LEFT JOIN metas m ON p.id = m.pilar
                                   LEFT JOIN resultados r ON m.id = r.meta
-                                  LEFT JOIN mi_resultado_indicadores ri ON r.id = ri.id_resultado
-                                  LEFT JOIN mi_indicadores i ON (ri.id_indicador = i.id_indicador AND i.estado = true)
+                                  LEFT JOIN resultado_indicadores ri ON r.id = ri.id_resultado
+                                  LEFT JOIN indicadores i ON (ri.id_indicador = i.id_indicador AND i.estado = true)
 
                                   GROUP BY p.cod_p,p.nombre,p.descripcion
                                   ORDER BY p.cod_p ASC");
@@ -49,12 +50,13 @@ class DashboardController extends Controller
   {
 
     if($request->ajax()) {
-          $listaPM = \DB::select("SELECT ri.punto_medicion as nombre,count(i.id_indicador) as total
+          $listaPM = \DB::connection('dbestadistica')
+                    ->select("SELECT ri.punto_medicion as nombre,count(i.id_indicador) as total
                                   FROM pilares p
                                   LEFT JOIN metas m ON p.id = m.pilar
                                   LEFT JOIN resultados r ON m.id = r.meta
-                                  LEFT JOIN mi_resultado_indicadores ri ON r.id = ri.id_resultado
-                                  LEFT JOIN mi_indicadores i ON ri.id_indicador = i.id_indicador
+                                  LEFT JOIN resultado_indicadores ri ON r.id = ri.id_resultado
+                                  LEFT JOIN indicadores i ON ri.id_indicador = i.id_indicador
                                   WHERE ri.punto_medicion is not null
                                   AND i.estado = true
                                   GROUP BY ri.punto_medicion
@@ -78,12 +80,13 @@ class DashboardController extends Controller
   {
 
     if($request->ajax()) {
-          $listaPPM = \DB::select("SELECT tab.cod_p,
+          $listaPPM = \DB::connection('dbestadistica')
+                      ->select("SELECT tab.cod_p,
                                   tab.nombre,
                                   (
                                   	SELECT count(*) as total
-                                  	FROM mi_resultado_indicadores cri
-                                    INNER JOIN mi_indicadores i ON cri.id_indicador = i.id_indicador
+                                  	FROM resultado_indicadores cri
+                                    INNER JOIN indicadores i ON cri.id_indicador = i.id_indicador
                                   	INNER JOIN resultados cr ON cri.id_resultado = cr.id
                                   	INNER JOIN metas cm ON cr.meta = cm.id
                                   	INNER JOIN pilares cp ON cm.pilar = cp.id
@@ -93,8 +96,8 @@ class DashboardController extends Controller
                                   ) as proceso,
                                   (
                                   	SELECT count(*) as total
-                                  	FROM mi_resultado_indicadores cri
-                                    INNER JOIN mi_indicadores i ON cri.id_indicador = i.id_indicador
+                                  	FROM resultado_indicadores cri
+                                    INNER JOIN indicadores i ON cri.id_indicador = i.id_indicador
                                   	INNER JOIN resultados cr ON cri.id_resultado = cr.id
                                   	INNER JOIN metas cm ON cr.meta = cm.id
                                   	INNER JOIN pilares cp ON cm.pilar = cp.id
@@ -104,8 +107,8 @@ class DashboardController extends Controller
                                   ) as producto,
                                   (
                                   	SELECT count(*) as total
-                                  	FROM mi_resultado_indicadores cri
-                                    INNER JOIN mi_indicadores i ON cri.id_indicador = i.id_indicador
+                                  	FROM resultado_indicadores cri
+                                    INNER JOIN indicadores i ON cri.id_indicador = i.id_indicador
                                   	INNER JOIN resultados cr ON cri.id_resultado = cr.id
                                   	INNER JOIN metas cm ON cr.meta = cm.id
                                   	INNER JOIN pilares cp ON cm.pilar = cp.id
