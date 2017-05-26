@@ -30,6 +30,7 @@ class DashboardController extends Controller
   public function listaIndicadoresPilares(Request $request)
   {
 
+
     if($request->ajax()) {
           $listaIP = \DB::connection('dbestadistica')
                     ->select("SELECT p.cod_p,(p.nombre||': '||p.descripcion) as nombre,count(i.id_indicador) as total
