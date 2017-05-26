@@ -295,9 +295,9 @@
 
                     </li>
                     <li> <a id="mp_indicadores" href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i>
-                      <span class="hide-menu">Indicadores <span class="fa arrow"></span> </span></a>
+                      <span class="hide-menu">Catalogo Indicadores <span class="fa arrow"></span> </span></a>
                       <ul class="nav nav-second-level">
-                          <li><a id="mp_indicadores" href="{{ url('/indicadores/catalogo') }}">Catalogo</a></li>
+                          <li><a id="mp_indicadores" href="{{ url('/indicadores/catalogo') }}"> Resultado-Indicador</a></li>
                       </ul>
                     </li>
 

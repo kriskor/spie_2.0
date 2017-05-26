@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Indicador extends Model
 {
-  protected $table = 'mi_indicadores';
+  protected $connection = 'dbestadistica';
+  protected $table = 'indicadores';
   protected $primaryKey = 'id_indicador';
 }

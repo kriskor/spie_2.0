@@ -44,6 +44,7 @@ Route::get('/moduloindicadores/ajax/datospilar', 'ModuloIndicadores\CatalogoCont
 Route::get('/moduloindicadores/ajax/datosmeta', 'ModuloIndicadores\CatalogoController@datosMeta');
 Route::get('/moduloindicadores/ajax/datosresultado', 'ModuloIndicadores\CatalogoController@datosResultado');
 Route::post('/moduloindicadores/ajax/datosindicador', 'ModuloIndicadores\CatalogoController@datosIndicador');
+Route::post('/moduloindicadores/ajax/datoscatalogoindicador', 'ModuloIndicadores\CatalogoController@datosCatalogoIndicador');
 
 //abm_indicadores
 Route::post('/moduloindicadores/ajax/guardarindicador', 'ModuloIndicadores\CatalogoController@guardarIndicador');
@@ -54,6 +55,7 @@ Route::delete('/moduloindicadores/ajax/eliminarindicador', 'ModuloIndicadores\Ca
 
 
 Route::get('/moduloindicadores/ajax/listaindicadores', 'ModuloIndicadores\CatalogoController@listaIndicadores');
+Route::get('/moduloindicadores/ajax/autocompletarindicadores', 'ModuloIndicadores\CatalogoController@autocompletarIndicadores');
 
 
 

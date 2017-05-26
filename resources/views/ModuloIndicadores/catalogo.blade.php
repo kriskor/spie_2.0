@@ -251,8 +251,13 @@
 
                                       <div class="form-group row" style="background:#F7FAFC;">
                                           <label class="control-label col-sm-3">Nombre de Indicador</label>
+
                                           <div class="col-sm-9">
-                                            <textarea class="form-control" placeholder="Nombre del indicador" rows="2" name="indicador_nombre" required></textarea>
+                                            <input name="sel_indicador" type="checkbox"/>Buscar indicador existente
+                                            <textarea id="indicador_nombre" class="form-control" placeholder="Nombre del indicador" rows="2" name="indicador_nombre" required></textarea>
+                                            <div id='indicador_nombre_sel' style='float: left; margin-top: 10px;' ></div>
+                                            {{-- <textarea id="indicador_nombre_sel"  class="form-control" placeholder="Buscar indicador" rows="2" name="indicador_nombre_sel" required></textarea> --}}
+                                            <input type="hidden" name="id_indicador_sel">
                                           </div>
                                       </div>
 
@@ -509,11 +514,15 @@
 
 
   <script type="text/javascript">
+      //estados iniciales de objetos
+
+
       function activarMenu(id,sub){
           $('#'+id).addClass('active');
       }
-
+        //fin estados iniciales de objetos
       $(document).ready(function(){
+          $('#indicador_nombre_sel').hide();
 
           activarMenu('mp_indicadores',0);
           //$('.modal-dialog').draggable();
@@ -1097,12 +1106,7 @@
                 $('#eliminar').removeClass('disabled');
             });
 
-            // $("#jqxgrid").bind('rowunselect', function(event) {
-            //     $('#modificar').attr("disabled", true);
-            //     $('#modificar').addClass('disabled');
-            //     $('#eliminar').attr("disabled", true);
-            //     $('#eliminar').addClass('disabled');
-            // });
+
 
             //apertura de modal
 
@@ -1110,6 +1114,8 @@
 
             //ABM INDICADORES
             $('#agregar').click(function() {
+                  $('#indicador_nombre_sel').hide();
+                  $('#indicador_nombre').show();
                   $('select[name="resultado_asignado"]').val($('input[name="id_sel_resultado"]').val() );
             });
 
@@ -1120,7 +1126,7 @@
                  var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rowindex);
                 $.ajax({
                         url: "{{ url('/moduloindicadores/ajax/datosindicador') }}",
-                        data: { '_token': $('input[name=_token]').val(),'indicador': dataRecord.id_indicador,'resultado': $('input[name="id_sel_resultado"]').val() },
+                        data: { '_token': $('input[name=_token]').val(),'indicador_resultado': dataRecord.id_resultado_indicador },
                         type: "post",
                         dataType: 'json',
                         success: function(date){
@@ -1161,7 +1167,7 @@
                    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rowindex);
                    $.ajax({
                            url: "{{ url('/moduloindicadores/ajax/eliminarindicador') }}",
-                           data: { '_token': $('input[name=_token]').val(),'indicador': dataRecord.id_indicador },
+                           data: { '_token': $('input[name=_token]').val(),'indicador_resultado': dataRecord.id_resultado_indicador },
                            type: "delete",
                            dataType: 'json',
                            success: function(date){
@@ -1188,12 +1194,98 @@
             });
 
 
+            var sourceAUT =
+              {
+                  datatype: "json",
+                  datafields: [
+                      { name: 'id_indicador' },
+                      { name: 'nombre' }
+                  ],
+                  url:  '{{ url('/moduloindicadores/ajax/autocompletarindicadores') }}',
+                  async: false
+              };
+            var dataAdapterAUT = new $.jqx.dataAdapter(sourceAUT);
+            // Create a jqxInput
+            /*$("#indicador_nombre_sel").jqxInput({
+              source: dataAdapterAUT,
+              placeHolder: "Buscar Indicador:",
+              displayMember: "nombre",
+              valueMember: "id_indicador",
+              width: "100%",
+              height: 50
+            });*/
+            $("#indicador_nombre_sel").jqxComboBox({
+              source: dataAdapterAUT,
+              displayMember: "nombre",
+              valueMember: "id_indicador",
+              selectedIndex: 0,
+              width: '100%',
+              height: '50',
+              searchMode:'containsignorecase',
+             autoComplete:true
+
+            });
 
 
+
+            $("#indicador_nombre_sel").on('select', function (event) {
+              if (event.args) {
+                      var item = event.args.item;
+                      if (item) {
+                        $('input[name="id_indicador_sel"]').val(item.value);//item.label
+
+                        $.ajax({
+                                url: "{{ url('/moduloindicadores/ajax/datoscatalogoindicador') }}",
+                                data: { '_token': $('input[name=_token]').val(),'indicador': item.value },
+                                type: "post",
+                                dataType: 'json',
+                                success: function(date){
+                                  $.each(date, function(i, data) {
+                                      //$('textarea[name="indicador_nombre"]').val(data.nombre);
+                                      $('textarea[name="fuente_informacion"]').val(data.fuente_informacion);
+                                  });
+                                },
+                                error:function(data){
+                                  alert("Error recuperar los datos.");
+                                }
+                            });
+
+
+
+
+
+
+                      }
+                  }
+            });
+
+
+
+            ///CHECK INDIcADOR EXISTENTE
+
+            $('input[name="sel_indicador"]').change(function(){
+                if($(this).prop("checked")) {
+
+                  $('#indicador_nombre_sel').show();
+                  $('#indicador_nombre').hide();
+
+                  $('#indicador_nombre_sel').val('');
+                  $('#id_indicador_sel').val('');
+                  //$('input[name="indicador_nombre"]').addClass('hide');
+
+                } else {
+                  $('#indicador_nombre_sel').hide();
+                  $('#indicador_nombre').show();
+                  $('textarea[name="fuente_informacion"]').val('');
+                }
+              });
+
+
+            ///FIN CHECK INDIcADOR EXISTENTE
 
 
       });
-
+      ///fin document
 
       function guardarIndicador(){
         $.ajax({

@@ -21,7 +21,7 @@
                   <div class="table-responsive">
                       <table class="table table-hover table-vcenter">
                           <tbody>
-                              <tr>
+                              <tr id="mod_indicadores">
                                   <td class="text-center" style="width: 200px;">
                                       <div style="width: 180px;">
                                           <img class="img-responsive" src="/assets_home/assets/img/iconos/ico_mod_indicadores.png" alt="">
@@ -36,7 +36,7 @@
                                   <td class="text-center">
 
                                       <p class="remove-margin-b">
-                                          <button id="mod_indicadores" class="btn btn-x btn-default" type="button">
+                                          <button class="btn btn-x btn-default" type="button">
                                                   <i class="fa fa-download push-5-r text-primary"></i>Ingresar
                                           </button>
                                       </p>
@@ -46,7 +46,7 @@
 
 
 
-                              <tr>
+                              <tr id="mod_admindatabase">
                                   <td class="text-center" style="width: 200px;">
                                       <div style="width: 180px;">
                                           <img class="img-responsive" src="/assets_home/assets/img/iconos/icono_adminbasedatos.jpg" alt="">
@@ -61,7 +61,7 @@
                                   <td class="text-center">
 
                                       <p class="remove-margin-b">
-                                          <button id="mod_admindatabase" class="btn btn-x btn-default" type="button">
+                                          <button  class="btn btn-x btn-default" type="button">
                                                   <i class="fa fa-download push-5-r text-primary"></i>Ingresar
                                           </button>
                                       </p>
