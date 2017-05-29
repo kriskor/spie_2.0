@@ -3,6 +3,7 @@
 @section('header')
   <link href="/inspinia2.5/css/plugins/select2/select2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/jqwidgets4.4.0/jqwidgets/styles/jqx.base.css" type="text/css" />
+  <link href="/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
   <style>
   .redgrid:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected){
               color:#fff;
@@ -166,6 +167,12 @@
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxgrid.columnsresize.js"></script>
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxgrid.aggregates.js"></script>
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxdata.js"></script>
+
+
+  <script src="/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+  <script src="/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
+
+  
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
   <script type="text/javascript">
       function activarMenu(id,sub){
@@ -424,31 +431,46 @@
 
 
           $('#v_guardar_aplicar').click(function() {
-            var rows = $('#jqxgrid').jqxGrid('getrows');
-            var res = {};
-            $.each(rows, function(i, e) {
-                res[e.campo_original] = e.nom_resultado;
+
+
+            swal({
+              title: "Está seguro de aplicar los cambios?",
+              text: "Se actualizara la información con los datos del panel!",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Si, aplicar!",
+              closeOnConfirm: false
+            }, function(){
+                        var rows = $('#jqxgrid').jqxGrid('getrows');
+                        var res = {};
+                        $.each(rows, function(i, e) {
+                            res[e.campo_original] = e.nom_resultado;
+                        });
+
+                        var dataV = $('#jqxgrid').jqxGrid('getrowdata', 0);
+
+                        $.ajax({
+                            url: "{{ url('/admindatabase/ajax/guardar_validacion') }}",
+                            data: { '_token': $('input[name=_token]').val(),'data': res,'dimension':dataV.dimension,'variable':dataV.variable },
+                            type: "POST",
+                            dataType: 'json',
+                            success: function(data){
+                              //commit(true);
+
+                              $("#jqxgrid").jqxGrid('clear');
+                              $("#ordersGrid").jqxGrid("clear");
+                              swal("Modificado!", "Se ha aplicado los cambios.", "success");
+
+                            },
+                            error:function(data){
+                              alert("Error al guardar los datos.");
+
+                            }
+                        });
+
             });
 
-            var dataV = $('#jqxgrid').jqxGrid('getrowdata', 0);
-
-            $.ajax({
-                url: "{{ url('/admindatabase/ajax/guardar_validacion') }}",
-                data: { '_token': $('input[name=_token]').val(),'data': res,'dimension':dataV.dimension,'variable':dataV.variable },
-                type: "POST",
-                dataType: 'json',
-                success: function(data){
-                  //commit(true);
-                  alert("Se guardo los datos.");
-                  $("#jqxgrid").jqxGrid('clear');
-                  $("#ordersGrid").jqxGrid("clear");
-
-                },
-                error:function(data){
-                  alert("Error al guardar los datos.");
-
-                }
-            });
 
           });
 
