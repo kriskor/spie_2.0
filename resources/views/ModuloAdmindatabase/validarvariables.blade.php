@@ -86,6 +86,8 @@
                                     </li>
                                     <li style="text-align: left;"><a id="v_relacionar" class="" href="javascript:void(0)" style="width: 100px; font-size: 8.5px;padding: 7px 95px 7px 3px;">Corregir Relacion </a>
                                     </li>
+                                    <li style="text-align: left;"><a id="v_mantener" class="" href="javascript:void(0)" style="width: 100px; font-size: 8.5px;padding: 7px 95px 7px 3px;">Mantener dato origen </a>
+                                    </li>
                                     <!--li style="text-align: left;"><a id="v_guardar_aplicar" class="" href="javascript:void(0)" style="width: 100px; font-size: 8.5px;padding: 7px 80px 7px 3px;">Guardar y Aplicar Validacion</a>
                                     </li-->
 
@@ -172,7 +174,7 @@
   <script src="/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
   <script src="/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 
-  
+
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
   <script type="text/javascript">
       function activarMenu(id,sub){
@@ -471,6 +473,24 @@
 
             });
 
+
+          });
+
+
+          $('#v_mantener').click(function() {
+            var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+            var rows = $("#jqxgrid").jqxGrid('selectedrowindexes');
+
+            if (rowindex > -1){
+              var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rows);
+              $("#jqxgrid").jqxGrid('setcellvalue', rowindex, 'campo_validado','NO' );
+              $("#jqxgrid").jqxGrid('setcellvalue', rowindex, 'observaciones','Manteniendo dato Origen' );
+              $("#jqxgrid").jqxGrid('setcellvalue', rowindex, 'nom_resultado', dataRecord.campo_original );
+              //$("#jqxgrid").jqxGrid('setcellvalue', rowindex, 'id_resultado', dataRecord.id_oficial);
+
+            }else{
+                  alert("Seleccione un registro.");
+            }
 
           });
 
