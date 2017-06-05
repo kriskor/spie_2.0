@@ -293,35 +293,14 @@
 
                     </li>
                     <li class=""> <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i>
-                      <span class="hide-menu">Datos Generales</span></a>
+                      <span class="hide-menu">Planes</span></a>
                       <ul class="nav nav-second-level">
-                          <li><a href="basic-table.html">Enfoque Político</a></li>
-                          <li><a href="table-layouts.html">Estructura Institucional</a></li>
-
+                          <li><a href="basic-table.html">(PSDI)Planes Sectoriales</a></li>
+                          <li><a href="{{ url('subsistemaplanificacion/planesterritoriales') }}">(PTDI)Planes Territoriales</a></li>
                       </ul>
                     </li>
 
-                    <li class=""> <a href="#" class="waves-effect"><i data-icon="f" class="linea-icon linea-basic fa-fw"></i>
-                      <span class="hide-menu">Diagnostico</span></a>
-                      <ul class="nav nav-second-level">
-                          <li><a href="basic-table.html">Situacion</a></li>
-                          <li><a href="table-layouts.html">Sistemas de Vida</a></li>
-                          <li><a href="table-layouts.html">Riesgos</a></li>
 
-                      </ul>
-                    </li>
-
-                    <li> <a href="#" class="waves-effect"><i data-icon="O" class="linea-icon linea-software fa-fw"></i> <span class="hide-menu">Planificación<span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="basic-table.html">Articulación al PDES</a></li>
-                            <li><a href="table-layouts.html">Crear Acciones</a></li>
-                            <li><a href="data-table.html">Programacion</a></li>
-                            <li><a href="bootstrap-tables.html">Presupuesto</a></li>
-                            <li><a href="responsive-tables.html">Articulacion</a></li>
-                            <li><a href="editable-tables.html">Roles y Actores</a></li>
-                            <li><a href="foo-tables.html">Territorializacion</a></li>
-                        </ul>
-                    </li>
 
 
 

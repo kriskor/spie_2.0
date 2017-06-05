@@ -228,7 +228,7 @@
 
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active nav-item"><a href="#datos_indicador" class="nav-link" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Datos generales</span></a></li>
-                                <li role="presentation" class="nav-item"><a href="#linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li>
+                                <!--li role="presentation" class="nav-item"><a href="#linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li-->
 
                             </ul>
 
@@ -366,7 +366,7 @@
 
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active nav-item"><a href="#mod_datos_indicador" class="nav-link" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Datos generales</span></a></li>
-                                <li role="presentation" class="nav-item"><a href="#mod_linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li>
+                                <!--li role="presentation" class="nav-item"><a href="#mod_linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li-->
 
                             </ul>
 

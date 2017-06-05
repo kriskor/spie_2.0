@@ -308,9 +308,9 @@
     <script src="/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
     <script src="/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
       function activarMenu(id,sub){
           $('#'+id).addClass('active');
       }

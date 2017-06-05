@@ -21,7 +21,7 @@
                   <div class="table-responsive">
                       <table class="table table-hover table-vcenter">
                           <tbody>
-                              <tr>
+                              <tr id="sub_planificacion">
                                   <td class="text-center" style="width: 200px;">
                                       <div style="width: 180px;">
                                           <img class="img-responsive" src="/assets_home/assets/img/iconos/ico_sp.png" alt="">
@@ -36,7 +36,7 @@
                                   <td class="text-center">
 
                                       <p class="remove-margin-b">
-                                          <button id="sub_planificacion" class="btn btn-x btn-default" type="button">
+                                          <button  class="btn btn-x btn-default" type="button">
                                                   <i class="fa fa-download push-5-r text-primary"></i>Ingresar
                                           </button>
                                       </p>
@@ -74,7 +74,7 @@
       $(document).ready(function(){
           activarMenu('home',0);
           $("#sub_planificacion").on('click', function () {
-              $(location).attr('href','{{ url('/planificacion/dashboard') }}');
+              $(location).attr('href','{{ url('/subsistemaplanificacion/dashboard') }}');
            });
 
 

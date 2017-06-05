@@ -8,7 +8,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/modulos', 'HomeController@modulos');
-Route::get('/planificacion/dashboard', 'SubsistemaPlanificacion\DashboardController@index');
+
 Route::get('/indicadores/dashboard', 'ModuloIndicadores\DashboardController@index');
 Route::get('/indicadores/catalogo', 'ModuloIndicadores\CatalogoController@index');
 
@@ -128,6 +128,23 @@ Route::get('/admindatabase/ajax/corrector_campo_var_estadistica', 'ModuloAdminda
 Route::post('/admindatabase/ajax/guardar_validacion', 'ModuloAdmindatabase\VariablesController@guardarValidacion');
 
 
-Auth::routes();
+Route::group(
+    array('prefix' => 'subsistemaplanificacion'),
+    function() {
+            Route::get('dashboard', 'SubsistemaPlanificacion\DashboardController@index');
+            Route::get('planesterritoriales', 'SubsistemaPlanificacion\PlanesController@entidadesTerritoriales');
 
-Route::get('/home', 'HomeController@index');
+
+
+    }
+);
+Route::group(
+    array('prefix' => 'subsistemaplanificacion/ajax'),
+    function() {
+            Route::get('listaentidades', 'SubsistemaPlanificacion\PlanesController@listaEntidades');
+
+
+
+
+    }
+);
