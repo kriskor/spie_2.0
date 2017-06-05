@@ -18,7 +18,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="username" class="col-md-4 control-label">Usuario</label>
+                            <label for="username" class="col-md-4 control-label">Usuario: </label>
 
                             <div class="col-md-4">
                                 <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Constraseña</label>
+                            <label for="password" class="col-md-4 control-label">Constraseña: </label>
 
                             <div class="col-md-4">
                                 <input id="password" type="password" class="form-control" name="password" required>
