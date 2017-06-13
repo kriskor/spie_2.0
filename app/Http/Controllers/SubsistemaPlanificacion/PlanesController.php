@@ -14,6 +14,8 @@ use App\SubsistemaPlanificacion\Accion;
 use App\SubsistemaPlanificacion\Plan;
 use App\SubsistemaPlanificacion\Tipoplan;
 use App\SubsistemaPlanificacion\Presupuesto;
+use App\SubsistemaPlanificacion\Accionprogramasmef;
+use App\SubsistemaPlanificacion\Programasmef;
 
 
 class PlanesController extends Controller
@@ -131,6 +133,16 @@ class PlanesController extends Controller
       $articulacion->id_entidad = $request->entidad;
       $articulacion->id_accion = $request->accion;
       $articulacion->save();
+
+       /*$programasMEF = \DB::select("SELECT pl.*
+                        FROM sp_articulacion ar
+                        INNER JOIN sp_planes pl ON ar.id = pl.id_articulacion
+                        WHERE ar.id_entidad = ?
+                        AND ar.id = ?
+                        AND pl.nivel = 'n1'
+                        AND pl.activo = true", [$request->id_entidad,$request->id_articulacion]);*/
+
+
       return \Response::json(1);
     }catch(Exception $e){
 
@@ -170,7 +182,17 @@ class PlanesController extends Controller
       $plan->activo = true;
       $plan->save();
 
-
+      $añoI = 2016;
+      $añoF = 2020;
+      if($request->tipo_plan != 5){
+        for ($i=$añoI;$i<=$añoF;$i++) {
+          $presupuesto = new Presupuesto();
+          $presupuesto->id_plan = $plan->id;
+          $presupuesto->gestion = $i;
+          $presupuesto->monto = 0.00;
+          $presupuesto->save();
+        }
+      }
 
 
       return \Response::json($request->id_articulacion);
@@ -306,53 +328,74 @@ class PlanesController extends Controller
         return \Response::json($data);
     }
   }
+  // public function mostrarPlanPresupuesto(Request $request)
+  // {
+  //  if($request->ajax()) {
+  //
+  //       $html="";
+  //       $añoI = 2016;
+  //       $añoF = 2020;
+  //       for ($i=$añoI;$i<=$añoF;$i++) {
+  //         $presupuesto = Presupuesto::where('gestion', $i)
+  //                      ->where('id_plan', $request->id)
+  //                      ->select('id','gestion','id_plan',\DB::raw("to_char(monto,'999G999G999G999G999G999G999D99') as monto"))
+  //                      ->get();
+  //         if($presupuesto->count() > 0){
+  //           foreach ($presupuesto as $p) {
+  //             $html .="<tr>
+  //                         <td>$p->gestion<input type='text'name='id_presupuesto[]' value='$p->id'></td>
+  //                         <td><input type='text' placeholder='Monto' class='form-control money text-right' name='monto[]' value='".trim($p->monto)."'></td>
+  //                     </tr>";
+  //           }
+  //         }else{
+  //           $html .="<tr>
+  //                       <td>$i<input type='text'name='id_presupuesto[]' value='-1'></td>
+  //                       <td><input type='text' placeholder='Monto' class='form-control money text-right' name='monto[]' value='0,00'></td>
+  //                   </tr>";
+  //
+  //         }
+  //
+  //
+  //       }
+  //       return \Response::json($html);
+  //   }
+  // }
   public function mostrarPlanPresupuesto(Request $request)
   {
    if($request->ajax()) {
 
         $html="";
-        $añoI = 2016;
-        $añoF = 2020;
-        for ($i=$añoI;$i<=$añoF;$i++) {
-          $presupuesto = Presupuesto::where('gestion', $i)
-                       ->where('id_plan', $request->id)
+
+          $presupuesto = Presupuesto::where('id_plan', $request->id)
                        ->select('id','gestion','id_plan',\DB::raw("to_char(monto,'999G999G999G999G999G999G999D99') as monto"))
                        ->get();
-          if($presupuesto->count() > 0){
-            foreach ($presupuesto as $p) {
+
+          foreach ($presupuesto as $p) {
               $html .="<tr>
-                          <td>$p->gestion</td>
+                          <td>$p->gestion<input type='hidden' name='id_presupuesto[]' value='$p->id'><input type='hidden' name='gestion[]' value='$p->gestion'></td>
                           <td><input type='text' placeholder='Monto' class='form-control money text-right' name='monto[]' value='".trim($p->monto)."'></td>
                       </tr>";
-            }
-          }else{
-            $html .="<tr>
-                        <td>$i</td>
-                        <td><input type='text' placeholder='Monto' class='form-control money text-right' name='monto[]' value='0,00'></td>
-                    </tr>";
-
           }
 
 
-        }
+
+
         return \Response::json($html);
     }
   }
-
   public function modificarPlanPresupuesto(Request $request)
   {
       try{
-        $presupuestoD = Presupuesto::where('id_plan', $request->id_plan);
-        $presupuestoD->delete();
+
         $monto = $request->monto;
-        $gestion = 2016;
+
         foreach ( $monto as $k => $v) {
-          $presupuesto = new Presupuesto();
+          $presupuesto = Presupuesto::find($request->id_presupuesto[$k]);
           $presupuesto->id_plan = $request->id_plan;
-          $presupuesto->gestion = $gestion;
+          $presupuesto->gestion = $request->gestion[$k];
           $presupuesto->monto = $this->parse_number($request->monto[$k], ',') ;
           $presupuesto->save();
-          $gestion ++;
+
         }
 
 

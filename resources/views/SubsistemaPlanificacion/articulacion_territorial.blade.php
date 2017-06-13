@@ -110,6 +110,8 @@
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(6,'Inversion')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Inversion</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(7,'Preinversion')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Preinversion</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(8,'Fortalecimiento')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Fortalecimiento</a></li>
+
+                                              <li style="text-align: left;"><a class="" onclick="nuevoPlan(12,'Actividad')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Actividad</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(9,'Funcionamiento')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Funcionamiento</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(10,'Transferencias')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Transferencias</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(11,'Gastos por ley')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Gastos por ley</a></li>
@@ -203,7 +205,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                       <div class="form-group">
-                                        <label class="control-label">Monto total</label>
+                                        <label class="control-label">Monto total (Bs.)</label>
                                         <input type="text" placeholder="Ingresar monto total" class="form-control money" name="monto_total_plan">
                                       </div>
                                      </div>
