@@ -133,6 +133,8 @@ Route::group(
     function() {
             Route::get('dashboard', 'SubsistemaPlanificacion\DashboardController@index');
             Route::get('planesterritoriales', 'SubsistemaPlanificacion\PlanesController@entidadesTerritoriales');
+            Route::get('planessectoriales', 'SubsistemaPlanificacion\PlanesController@entidadesSectoriales');
+            Route::get('articulacion/{id}', 'SubsistemaPlanificacion\PlanesController@articulacionPlanTerritorial');
 
 
 
@@ -141,9 +143,23 @@ Route::group(
 Route::group(
     array('prefix' => 'subsistemaplanificacion/ajax'),
     function() {
-            Route::get('listaentidades', 'SubsistemaPlanificacion\PlanesController@listaEntidades');
-
-
+            Route::get('listaentidadesterritoriales', 'SubsistemaPlanificacion\PlanesController@listaEntidadesTerritoriales');
+            Route::get('listaentidadessectoriales', 'SubsistemaPlanificacion\PlanesController@listaEntidadesSectoriales');
+            Route::get('listaarticulacion', 'SubsistemaPlanificacion\PlanesController@articulacionEntidad');
+            Route::get('listarpilares', 'SubsistemaPlanificacion\PlanesController@listarPilares');
+            Route::get('listarmetas', 'SubsistemaPlanificacion\PlanesController@listarMetas');
+            Route::get('listarresultados', 'SubsistemaPlanificacion\PlanesController@listarResultados');
+            Route::get('listaracciones', 'SubsistemaPlanificacion\PlanesController@listarAcciones');
+            Route::post('guardararticulacion', 'SubsistemaPlanificacion\PlanesController@guardarArticulacion');
+            Route::delete('eliminararticulacion', 'SubsistemaPlanificacion\PlanesController@eliminarArticulacion');
+            Route::post('guardararplan', 'SubsistemaPlanificacion\PlanesController@guardarPlan');
+            Route::post('listaplanesarticulacion', 'SubsistemaPlanificacion\PlanesController@listaPlanesArticulacion');
+            Route::post('listaplanesarticulacionhijos', 'SubsistemaPlanificacion\PlanesController@listaPlanesArticulacionHijos');
+            Route::post('eliminarplan', 'SubsistemaPlanificacion\PlanesController@eliminarPlan');
+            Route::post('modificaplangeneral', 'SubsistemaPlanificacion\PlanesController@modificaPlanGeneral');
+            Route::post('mostrarPlanGeneral', 'SubsistemaPlanificacion\PlanesController@mostrarPlanGeneral');
+            Route::post('mostrarPlanPresupuesto', 'SubsistemaPlanificacion\PlanesController@mostrarPlanPresupuesto');
+            Route::post('modificarPlanPresupuesto', 'SubsistemaPlanificacion\PlanesController@modificarPlanPresupuesto');
 
 
     }

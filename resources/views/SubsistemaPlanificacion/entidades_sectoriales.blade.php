@@ -4,23 +4,6 @@
   <link rel="stylesheet" href="/jqwidgets4.4.0/jqwidgets/styles/jqx.base.css" type="text/css" />
   <link rel="stylesheet" href="/jqwidgets4.4.0/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
   <link href="/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
-  <style type="text/css">
-
-  .jqx-grid-column-header{
-    z-index:0!important;
-  }
-  .jqx-grid-content{
-    z-index:0!important;
-  }
-  .jqx-grid{
-    z-index:0!important;
-  }
-  #pagerjqxgrid{
-    z-index:0!important;
-  }
-
-
-  </style>
 @endsection
 
 @section('content')
@@ -28,12 +11,12 @@
   <div class="container-fluid">
       <div class="row bg-title">
           <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-              <h4 class="page-title">Planes territoriales</h4>
+              <h4 class="page-title">Planes Sectoriales</h4>
           </div>
           <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
               <ol class="breadcrumb">
                   <li><a href="#">Planes</a></li>
-                  <li class="active">Planes territoriales</li>
+                  <li class="active">Planes Sectoriales</li>
               </ol>
           </div>
           <!-- /.col-lg-12 -->
@@ -46,8 +29,7 @@
           </div>
       </div>
 
-
- </div>
+  </div>
   <!-- /.container-fluid -->
 
 @endsection
@@ -77,7 +59,7 @@
   <script src="/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
   <script src="/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script>
+  {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" ></script> --}}
   <script type="text/javascript">
       function activarMenu(id,sub){
           $('#'+id).addClass('active');
@@ -96,7 +78,7 @@
                 { name: 'codigo', type: 'string' }
               ],
               id: 'id',
-              url: "{{ url('/subsistemaplanificacion/ajax/listaentidadesterritoriales') }}"
+              url: "{{ url('/subsistemaplanificacion/ajax/listaentidadessectoriales') }}"
           };
           var dataAdapter = new $.jqx.dataAdapter(source);
 
@@ -121,16 +103,6 @@
                   { text: 'Sigla', datafield: 'sigla', width: 160 },
                   { text: 'Codigo MEF', datafield: 'codigo' }
                 ]
-            });
-
-            $("#jqxgrid").on('rowdoubleclick', function (event) {
-
-                  var args = event.args;
-                  var row = args.rowindex;
-                  var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-                  var id = dataRecord.id;
-                  location.href = "/subsistemaplanificacion/articulacion/" + dataRecord.id;
-
             });
       });
     </script>

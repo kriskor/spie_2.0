@@ -14,6 +14,9 @@
     <link href="/plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
     <!-- Menu CSS -->
     <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- page CSS -->
+    <link href="/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />
     <!-- animation CSS -->
     <link href="/assets_admin_one/css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -29,6 +32,12 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
+    <style>
+      .navbar-static-top .navbar-default{
+        z-index: 1000;
+      }
+
+    </style>
     @yield('header')
     <script>
         window.Laravel = <?php echo json_encode([
@@ -288,14 +297,14 @@
                         </div>
                         <!-- /input-group -->
                     </li>
-                    <li> <a href="{{ url('/planificacion/dashboard') }}" class="waves-effect"><i data-icon="v" class="linea-icon linea-basic fa-fw" ></i>
+                    <li> <a href="{{ url('subsistemaplanificacion/dashboard') }}" class="waves-effect"><i data-icon="v" class="linea-icon linea-basic fa-fw" ></i>
                       <span class="hide-menu"> Inicio <span class="fa arrow"></span> </span></a>
 
                     </li>
                     <li class=""> <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i>
                       <span class="hide-menu">Planes</span></a>
                       <ul class="nav nav-second-level">
-                          <li><a href="basic-table.html">(PSDI)Planes Sectoriales</a></li>
+                          <li><a href="{{ url('subsistemaplanificacion/planessectoriales') }}">(PSDI)Planes Sectoriales</a></li>
                           <li><a href="{{ url('subsistemaplanificacion/planesterritoriales') }}">(PTDI)Planes Territoriales</a></li>
                       </ul>
                     </li>
@@ -338,7 +347,7 @@
                 </div>
             </div>
             <!-- /.right-sidebar -->
-            <footer class="footer text-center"> 2017 &copy; SistemadePlanificacion </footer>
+            <footer class="footer text-center"> 2017 &copy; SubsistemadePlanificacion </footer>
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -357,6 +366,18 @@
     <script src="/assets_admin_one/js/waves.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="/assets_admin_one/js/custom.min.js"></script>
+    <script src="/assets_admin_one/js/cbpFWTabs.js"></script>
+    <script type="text/javascript">
+    (function() {
+
+        [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
+            new CBPFWTabs(el);
+        });
+
+    })();
+    </script>
+    <script src="/assets_admin_one/js/validator.js"></script>
+    <script src="/assets_admin_one/js/mask.js"></script>
     <!--Style Switcher -->
     <script src="/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
     @stack('script-head')
