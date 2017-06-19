@@ -135,6 +135,7 @@ Route::group(
             Route::get('planesterritoriales', 'SubsistemaPlanificacion\PlanesController@entidadesTerritoriales');
             Route::get('planessectoriales', 'SubsistemaPlanificacion\PlanesController@entidadesSectoriales');
             Route::get('articulacion/{id}', 'SubsistemaPlanificacion\PlanesController@articulacionPlanTerritorial');
+            Route::get('programamefpdes', 'SubsistemaPlanificacion\ConfiguracionController@programaMefPdes');
 
 
 
@@ -160,6 +161,16 @@ Route::group(
             Route::post('mostrarPlanGeneral', 'SubsistemaPlanificacion\PlanesController@mostrarPlanGeneral');
             Route::post('mostrarPlanPresupuesto', 'SubsistemaPlanificacion\PlanesController@mostrarPlanPresupuesto');
             Route::post('modificarPlanPresupuesto', 'SubsistemaPlanificacion\PlanesController@modificarPlanPresupuesto');
+            Route::get('listaProgramasMef', 'SubsistemaPlanificacion\ConfiguracionController@listaProgramasMef');
+            Route::post('guardararticulacionprograma', 'SubsistemaPlanificacion\ConfiguracionController@guardarArticulacionPrograma');
+            Route::get('listaalineacionprogramas', 'SubsistemaPlanificacion\ConfiguracionController@listaAlineacionProgramas');
+            Route::post('guardararnuevoprograma', 'SubsistemaPlanificacion\ConfiguracionController@guardararNuevoPrograma');
+            Route::post('datosprogramamef', 'SubsistemaPlanificacion\ConfiguracionController@datosProgramaMef');
+            Route::post('modificarprograma', 'SubsistemaPlanificacion\ConfiguracionController@modificarPrograma');
+            Route::delete('eliminarprogramamef', 'SubsistemaPlanificacion\ConfiguracionController@eliminarProgramaMef');
+            Route::delete('eliminararticulacionprogramapdes', 'SubsistemaPlanificacion\ConfiguracionController@eliminarArticulacionProgramaPDES');
+            Route::post('actualizarProgramasSugeridos', 'SubsistemaPlanificacion\PlanesController@actualizarProgramasSugeridos');
+            Route::get('cargarindicadorprocesoplantilla', 'SubsistemaPlanificacion\PlanesController@cargarindIcadorProcesoPlantilla');
 
 
     }

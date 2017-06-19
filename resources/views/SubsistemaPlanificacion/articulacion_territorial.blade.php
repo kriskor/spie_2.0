@@ -106,7 +106,7 @@
                                       </li>
                                       <li><a href="javascript:void(0)">+ b) PLANES</a>
                                           <ul style='width: 250px;'>
-                                              <li style="text-align: left;"><a class="" onclick="nuevoPlan(5,'Programa')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Programa</a></li>
+                                              <li style="text-align: left;"><a class="" onclick="actualizarProgramas(5,'Programa')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Actualizar Programas</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(6,'Inversion')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Inversion</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(7,'Preinversion')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Preinversion</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(8,'Fortalecimiento')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Fortalecimiento</a></li>
@@ -122,7 +122,6 @@
                       </div>
                   </div>
                   <div id="jqxgrid"> </div>
-
               </div>
           </div>
       </div>
@@ -193,10 +192,15 @@
                                 <form role="formnmodPlanGeneral" id="formnmodPlanGeneral" action="javascript:modificarPlanGeneral();"  method="POST"  data-toggle="validator" class="form">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="id_plan">
+                                <div class="row">
+                                    <div class="col-md-9">
+                                      <h3 class="box-title">Información general del plan</h3>
+                                    </div>
+                                    <div class="col-md-3">
+                                      <label class="control-label">TIPO PLAN: <span class="text-danger" id="tipo_plan_general"></span></label>
+                                    </div>
+                                </div>
 
-                                <p class="text-right">
-                                  <label class="control-label">TIPO PLAN: <span class="text-danger" id="tipo_plan_general"></span></label>
-                                </p>
                                 <div class="form-group">
                                   <label class="control-label">Nombre del Plan</label>
                                   <textarea class="form-control" placeholder="Nombre del Plan" rows="2" name="nombre_plan" required></textarea>
@@ -210,8 +214,31 @@
                                       </div>
                                      </div>
                                  </div>
+
+                                 <div class="row">
+                                     <div class="col-md-12">
+                                       <h3 class="box-title">Indicadores de Proceso relacionados al Plan <button type="button" class="btn btn-success btn-circle agregarIP"><i class="fa fa-plus-square"></i></button></h3>
+
+                                     </div>
+                                 </div>
+
+
+
+
+
+                                  <div id="datosIP" >
+
+                                  </div>
+
+
+
+
+
+
+
+
                                  <div class="modal-footer">
-                                   <button type="submit" class="btn btn-danger waves-effect waves-light left">Guardar</button>
+                                   <button type="submit" class="btn btn-info waves-effect waves-light left">Guardar</button>
                                  </div>
                                 </form>
 
@@ -521,7 +548,8 @@
                 { name: 'cod_a', type: 'string' },
                 { name: 'accion', type: 'string' },
                 { name: 'desc_a', type: 'string' },
-                { name: 'codigo', type: 'string' }
+                { name: 'codigo', type: 'string' },
+                { name: 'id_accion'}
               ],
               id: 'id',
               data: {entidad: '{{ $entidad }}'},
@@ -532,7 +560,7 @@
             $("#jqxgrid").jqxGrid(
             {
                 width: '100%',
-                height: 350,
+                height: 250,
                 //height: '100%',
                 theme: theme,
                 source: dataAdapter,
@@ -954,6 +982,18 @@
                alert("Seleccione un registro para eliminar.");
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
       });
 
 
@@ -1004,7 +1044,7 @@
                     $('#window2').jqxWindow('open');
                     $('#window2').jqxWindow('focus');
                 }else{
-                  alert('No puede crear un programa estando dentro un programa.');
+                  alert('No puede crear un programa estando dentro un programa abierto.');
                 }
              }else{
                  $("#titulo_plan").html('Nuevo:'+ desc);
@@ -1025,6 +1065,45 @@
            }
 
       }
+
+      function actualizarProgramas(ele,desc){
+        var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+        if (rowindex > -1)
+           {
+               var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rowindex);
+
+              if($("#id_padre").val() == ""){
+
+
+                $.ajax({
+                      type: "POST",
+                      url: "{{ url('/subsistemaplanificacion/ajax/actualizarProgramasSugeridos') }}",
+                      dataType: 'json',
+                      data: {id_entidad:{{ $entidad }},id_accion: dataRecord.id_accion,id_articulacion: dataRecord.id,'_token': $('input[name=_token]').val()} , // Adjuntar los campos del formulario enviado.
+                      success: function(data){
+
+                                actualizar_planes(data);
+
+                      },
+                      error:function(data){
+                        alert('No se pudo recuperar los planes.')
+
+                      }
+                });
+
+
+
+              }else{
+                alert('No puede crear un programa estando dentro un programa abierto.');
+              }
+           }else{
+               alert("Seleccione una articulacion para crear su plan.");
+           }
+
+      }
+
+
+
       function actualizar_planes(id){
 
           $.ajax({
@@ -1115,6 +1194,7 @@
       }
 
       function modificarPlanGeneral(){
+        $('#contenido_detalle').addClass('block-opt-refresh');
         $.ajax({
               type: "POST",
               url: "{{ url('/subsistemaplanificacion/ajax/modificaplangeneral') }}",
@@ -1122,6 +1202,10 @@
               data: $("#formnmodPlanGeneral").serialize() , // Adjuntar los campos del formulario enviado.
               success: function(data){
                   $('#name_'+data.id).html(data.nombre_plan);
+                  actualziarPlanGeneral(data.id);
+                  setTimeout(function(){
+                     $('#contenido_detalle').removeClass('block-opt-refresh');
+                  }, 2000);
                   alert("Datos generales actualizados");
               },
               error:function(data){
@@ -1159,7 +1243,7 @@
 
 
       function actualziarPlanGeneral(id){
-
+        $("#datosIP").html('');
           $.ajax({
                 type: "POST",
                 url: "{{ url('/subsistemaplanificacion/ajax/mostrarPlanGeneral') }}",
@@ -1170,6 +1254,7 @@
                   $('textarea[name="nombre_plan"]').val(data.nombre_plan);
                   $('input[name="monto_total_plan"]').val(data.monto_total_plan);
                   $('#tipo_plan_general').html(data.tipo_plan);
+                  $("#datosIP").append(data.indicadores_proces);
                 },
                 error:function(data){
                   alert('No se pudo recuperar los planes.')
@@ -1197,6 +1282,42 @@
 
       }
 
+    ///FUNCIONES O EVENTOS PARA LOS INDICADORES DE PROCESO
+    var ip_id = -100;
+    $(".agregarIP").click(function () {
+        ip_id--;
+        $.ajax({
+              type: "get",
+              url: "{{ url('/subsistemaplanificacion/ajax/cargarindicadorprocesoplantilla') }}",
+              dataType: 'json',
+              data: {id: ip_id} , // Adjuntar los campos del formulario enviado.
+              success: function(data){
+                $("#datosIP").append(data);
+              },
+              error:function(data){
+                alert('No se pudo cargar plantilla de indicador de proceso.')
+
+              }
+       });
+
+
+        //
+        // var mylayer = $('#baseIP').clone();
+        // $("#datosIP").append(mylayer.attr("id", "IP" + ip));
+        // $('#IP'+ ip).removeClass('hidden');
+
+    });
+
+    function quitarIP(ele){
+      //alert(ele);
+      if(ele > 0){
+        $('#EST'+ele).val('0');
+        $('#IP'+ele).addClass('hidden');
+      }else{
+        $('#IP'+ele).remove();
+      }
+
+    }
 
     </script>
 @endpush

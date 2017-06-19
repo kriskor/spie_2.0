@@ -309,6 +309,13 @@
                       </ul>
                     </li>
 
+                    <li class=""> <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i>
+                      <span class="hide-menu">Configuraciones</span></a>
+                      <ul class="nav nav-second-level">
+                          <li><a href="{{ url('subsistemaplanificacion/programamefpdes') }}">Programas MEF - PDES</a></li>
+                      </ul>
+                    </li>
+
 
 
 

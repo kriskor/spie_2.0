@@ -16,6 +16,9 @@ use App\SubsistemaPlanificacion\Tipoplan;
 use App\SubsistemaPlanificacion\Presupuesto;
 use App\SubsistemaPlanificacion\Accionprogramasmef;
 use App\SubsistemaPlanificacion\Programasmef;
+use App\SubsistemaPlanificacion\Unidad;
+use App\SubsistemaPlanificacion\Indicador;
+use App\SubsistemaPlanificacion\Planindicador;
 
 
 class PlanesController extends Controller
@@ -79,7 +82,7 @@ class PlanesController extends Controller
                                 vcp.cod_m,vcp.meta,vcp.desc_m,
                                 vcp.cod_r,vcp.resultado,vcp.desc_r,
                                 vcp.cod_a,vcp.accion,vcp.desc_a,
-                                vcp.codigo
+                                vcp.codigo,vcp.id_accion
                                 FROM sp_articulacion ar
                                 INNER JOIN sp_entidades e ON ar.id_entidad = e.id
                                 INNER JOIN sp_vista_catalogo_pdes vcp ON ar.id_accion = vcp.id_accion
@@ -134,14 +137,25 @@ class PlanesController extends Controller
       $articulacion->id_accion = $request->accion;
       $articulacion->save();
 
-       /*$programasMEF = \DB::select("SELECT pl.*
-                        FROM sp_articulacion ar
-                        INNER JOIN sp_planes pl ON ar.id = pl.id_articulacion
-                        WHERE ar.id_entidad = ?
-                        AND ar.id = ?
-                        AND pl.nivel = 'n1'
-                        AND pl.activo = true", [$request->id_entidad,$request->id_articulacion]);*/
+      $programasMEF = \DB::select("SELECT pr.id,pr.descripcion
+                                    FROM sp_programas_mef pr
+                                    INNER JOIN sp_accion_programas_mef apm ON pr.id = apm.id_programa_mef
+                                    WHERE apm.id_accion = ?
+                                    AND pr.activo = true
+                                    AND apm.activo = true ", [$request->accion]);
 
+      foreach ($programasMEF as $pr) {
+        $planAutomatico = new Plan();
+        $planAutomatico->id_articulacion = $articulacion->id;
+        $planAutomatico->nombre_plan = trim($pr->descripcion);
+        $planAutomatico->id_tipo_plan = 5;
+
+        $planAutomatico->nivel ='n1';
+        $planAutomatico->id_padre = null;
+        $planAutomatico->activo = true;
+        $planAutomatico->id_programa_mef = $pr->id;
+        $planAutomatico->save();
+      }
 
       return \Response::json(1);
     }catch(Exception $e){
@@ -216,19 +230,19 @@ class PlanesController extends Controller
                          AND ar.id = ?
                          AND pl.nivel = 'n1'
                          AND pl.activo = true", [$request->id_entidad,$request->id_articulacion]);
-      $html = "";
+      $html = '';
       $src = "";
 
        foreach ($sql as $l) {
             if($l->id_tipo_plan == 5){
-              $html .="<div class='col-lg-2 col-md-2 col-sm-6 col-xs-12 text-left'>
+              $html .="<div class='col-lg-1 col-md-1 col-sm-6 col-xs-12 text-left'>
                           <a class='thumbnail context-menu-dos' ondblclick='explorar($l->id);' name='$l->id' onmousedown='detectarBoton(event,this);' onblur='detectarBoton(event,this);'>
                             <img class='img-responsive' src='/assets_admin_one/img/img$l->id_tipo_plan.png' alt='LOG'>
                           </a>
                           <span class='thumb-name'><strong id='name_$l->id'>$l->nombre_plan</strong></span>
                       </div>";
             }else{
-              $html .="<div class='col-lg-2 col-md-2 col-sm-6 col-xs-12 text-left'>
+              $html .="<div class='col-lg-1 col-md-1 col-sm-6 col-xs-12 text-left'>
                           <a class='thumbnail context-menu-one' ondblclick='detallar_plan($l->id);' name='$l->id' onmousedown='detectarBoton(event,this);'>
                             <img class='img-responsive' src='/assets_admin_one/img/img".$l->id_tipo_plan.".png' alt='LOG'>
                           </a>
@@ -259,7 +273,7 @@ class PlanesController extends Controller
       $datosPadre = Plan::find($request->id_padre);
       $html = "";
        foreach ($sql as $l) {
-          $html .="<div class='col-lg-2 col-md-2 col-sm-6 col-xs-12 text-center'>
+          $html .="<div class='col-lg-1 col-md-1 col-sm-6 col-xs-12 text-center'>
                       <a class='thumbnail context-menu-one' ondblclick='detallar_plan($l->id);' name='$l->id' onmousedown='detectarBoton(event,this);'>
                         <img class='img-responsive' src='/assets_admin_one/img/img".$l->id_tipo_plan.".png' alt='LOG'>
                       </a>
@@ -305,6 +319,60 @@ class PlanesController extends Controller
         $plan->monto_total_plan = $this->parse_number($request->monto_total_plan, ',') ;
         $plan->save();
 
+        if(isset($request->descripcion)){
+          foreach ($request->descripcion as $k => $v) {
+            if($request->id_indicador[$k] < 0){
+                $indicadorProceso = new Indicador();
+                $indicadorProceso->nombre_indicador = $request->descripcion[$k];
+                $indicadorProceso->tipo = 2;
+                $indicadorProceso->activo = true;
+                $indicadorProceso->save();
+
+                $planIndicadores = new Planindicador();
+                $planIndicadores->id_plan = $request->id_plan;
+                $planIndicadores->id_indicador = $indicadorProceso->id;
+                $planIndicadores->unidad_numerica = ($request->meta[$k] !="")?$request->meta[$k]:0;
+                $planIndicadores->unidad_medida = $request->unidad[$k];;
+                $planIndicadores->activo = true;
+                $planIndicadores->save();
+            }else{
+              if($request->estado[$k] == 0){
+                  /*$indicadorProceso = Indicador::find( $request->id_indicador[$k]);
+                  $indicadorProceso->activo = false;
+                  $indicadorProceso->save();*/
+
+                  $planindicador = Planindicador::where('id_plan',$request->id_plan )
+                                  ->where('id_indicador',$request->id_indicador[$k] )->first();
+                  $planindicador->activo = false;
+                  $planindicador->save();
+
+                  // \DB::table('sp_plan_indicadores')
+                  // ->where('id_plan',$request->id_plan )
+                  // ->where('id_indicador',$request->id_indicador[$k] )
+                  // ->update(array( 'activo' => false ));
+
+              }else{
+                $indicadorProceso = Indicador::find( $request->id_indicador[$k]);
+                $indicadorProceso->nombre_indicador = $request->descripcion[$k];
+                $indicadorProceso->activo = true;
+                $indicadorProceso->save();
+
+                $planindicador = Planindicador::where('id_plan',$request->id_plan )->where('id_indicador',$request->id_indicador[$k] )->first();
+                $planindicador->unidad_numerica = ($request->meta[$k] !="")?$request->meta[$k]:0;
+                $planindicador->unidad_medida = $request->unidad[$k];
+                $planindicador->save();
+
+
+              }
+            }
+
+
+
+          }
+        }
+        $indicadorProceso =
+
+
         $data['id'] = $plan->id;
         $data['nombre_plan'] = $plan->nombre_plan;
         return \Response::json($data);
@@ -321,10 +389,57 @@ class PlanesController extends Controller
    if($request->ajax()) {
         $datosPlan = Plan::select('id','id_tipo_plan','nombre_plan',\DB::raw("to_char(monto_total_plan,'999G999G999G999G999G999G999D99') as monto_total_plan"))->find($request->id);
         $tipoPlan = Tipoplan::find($datosPlan->id_tipo_plan);
+
+        $listaIndicadoresProceso = \DB::select('SELECT i.id,i.nombre_indicador,pi.unidad_numerica,pi.unidad_medida
+                                                FROM sp_plan_indicadores pi
+                                                INNER JOIN sp_indicadores i ON pi.id_indicador = i.id
+                                                WHERE pi.id_plan = ?
+                                                AND i.tipo = 2
+                                                AND pi.activo = true', [$datosPlan->id]);
+
+
+        $unidades = Unidad::where('activo', true)->orderBy('orden', 'asc')->get();
+        $htmlIP="";
+        foreach ($listaIndicadoresProceso as $ip) {
+
+
+            $option = "";
+            foreach ($unidades as $u) {
+                if($u->id == $ip->unidad_medida)
+                    $option.="<option value='$u->id' selected>$u->unidad</option>";
+                else
+                    $option.="<option value='$u->id'>$u->unidad</option>";
+            }
+
+            $htmlIP .= '<div id="IP'.$ip->id.'" class="form-group row  ribbon-wrapper-reverse " style="background:#F7FAFC none repeat scroll 0 0;">
+                          <div class="ribbon ribbon-right ribbon-danger"><a class="btn btn-block btn-danger btn-sm" onclick="quitarIP('.$ip->id.');">Eliminar</a></div>
+                          <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                              <label class="control-label">Nombre del indicador</label>
+                              <textarea name="descripcion[]" class="form-control" rows="1" placeholder="Descripcion">'.$ip->nombre_indicador.'</textarea>
+                              <input type="hidden" name="id_indicador[]"  class="form-control" value="'.$ip->id .'">
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                              <label class="control-label">Meta</label>
+                              <input type="text" name="meta[]"  class="form-control" value="'.$ip->unidad_numerica.'">
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                              <label class="control-label">Unidad de medida</label>
+                              <select name="unidad[]" class="form-control">
+                                  '.$option.'
+                              </select>
+                              <input type="hidden" id="EST'.$ip->id.'" name="estado[]"  class="form-control" value="1">
+                          </div>
+                      </div>';
+        }
+
+
+
+
         $data['id']=$datosPlan->id;
         $data['nombre_plan']=$datosPlan->nombre_plan;
         $data['monto_total_plan']=trim($datosPlan->monto_total_plan);
         $data['tipo_plan'] = $tipoPlan->tipo;
+        $data['indicadores_proces'] = $htmlIP;
         return \Response::json($data);
     }
   }
@@ -407,6 +522,83 @@ class PlanesController extends Controller
                      'errors'  => "nose guardo nada",
                  ], 500);
       }
+  }
+
+
+  public function actualizarProgramasSugeridos(Request $request)
+  {
+    try{
+
+
+      $programasMEF = \DB::select("SELECT pr.id,pr.descripcion
+                                    FROM sp_programas_mef pr
+                                    INNER JOIN sp_accion_programas_mef apm ON pr.id = apm.id_programa_mef
+                                    WHERE apm.id_accion = ?
+                                    AND pr.activo = true
+                                    AND apm.activo = true ", [$request->id_accion]);
+
+      foreach ($programasMEF as $pr) {
+        $veriPrograma = Plan::where('id_articulacion', $request->id_articulacion)->where('id_programa_mef', $pr->id)->get();
+
+
+        if($veriPrograma->count() == 0){
+
+          $planAutomatico = new Plan();
+          $planAutomatico->id_articulacion = $request->id_articulacion;
+          $planAutomatico->nombre_plan = trim($pr->descripcion);
+          $planAutomatico->id_tipo_plan = 5;
+
+          $planAutomatico->nivel ='n1';
+          $planAutomatico->id_padre = null;
+          $planAutomatico->activo = true;
+          $planAutomatico->id_programa_mef = $pr->id;
+          $planAutomatico->save();
+        }
+
+      }
+
+      return \Response::json($request->id_articulacion);
+    }catch(Exception $e){
+
+        return \Response::json([
+                   'success' => 'false',
+                   'errors'  => "nosoe",
+               ], 500);
+        }
+
+  }
+
+  public function cargarindIcadorProcesoPlantilla(Request $request)
+  {
+
+  $unidades = Unidad::where('activo', true)->orderBy('orden', 'asc')->get();
+  $option = "";
+  foreach ($unidades as $u) {
+      $option.="<option value='$u->id'>$u->unidad</option>";
+  }
+
+   if($request->ajax()) {
+        $html = '<div id="IP'.$request->id.'" class="form-group row  ribbon-wrapper-reverse " style="background:#F7FAFC none repeat scroll 0 0;">
+                    <div class="ribbon ribbon-right ribbon-danger"><a class="btn btn-block btn-danger btn-sm" onclick="quitarIP('.$request->id.');">Eliminar</a></div>
+                    <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                        <label class="control-label">Nombre del indicador</label>
+                        <textarea name="descripcion[]" class="form-control" rows="1" placeholder="Descripcion"></textarea>
+                        <input type="hidden" name="id_indicador[]"  class="form-control" value="-1">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <label class="control-label">Meta</label>
+                        <input type="text" name="meta[]"  class="form-control" value="">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <label class="control-label">Unidad de medida</label>
+                        <select name="unidad[]" class="form-control">
+                            '.$option.'
+                        </select>
+                        <input type="hidden" id="EST'.$request->id.'" name="estado[]"  class="form-control" value="1">
+                    </div>
+                </div>';
+        return \Response::json($html);
+    }
   }
 
 
