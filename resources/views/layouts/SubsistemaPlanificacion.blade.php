@@ -13,7 +13,7 @@
     <link href="/assets_admin_one/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <link href="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.css" rel="stylesheet">
     <!-- page CSS -->
     <link href="/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
     <link href="/plugins/bower_components/custom-select/custom-select.css" rel="stylesheet" type="text/css" />
@@ -47,7 +47,9 @@
 </head>
 
 <body class="fix-header">
+
     <!-- Preloader -->
+
     <div class="preloader">
         <div class="cssload-speeding-wheel"></div>
     </div>
@@ -286,37 +288,37 @@
         <!-- Left navbar-header -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
+
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search hidden-sm hidden-md hidden-lg">
                         <!-- input-group -->
                         <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" placeholder="Buscar en sitio...">
                             <span class="input-group-btn">
                             <button class="btn btn-default" type="button"> <i class="fa fa-search"></i> </button>
                             </span>
                         </div>
                         <!-- /input-group -->
                     </li>
-                    <li> <a href="{{ url('subsistemaplanificacion/dashboard') }}" class="waves-effect"><i data-icon="v" class="linea-icon linea-basic fa-fw" ></i>
-                      <span class="hide-menu"> Inicio <span class="fa arrow"></span> </span></a>
-
-                    </li>
-                    <li class=""> <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i>
-                      <span class="hide-menu">Planes</span></a>
-                      <ul class="nav nav-second-level">
-                          <li><a href="{{ url('subsistemaplanificacion/planessectoriales') }}">(PSDI)Planes Sectoriales</a></li>
-                          <li><a href="{{ url('subsistemaplanificacion/planesterritoriales') }}">(PTDI)Planes Territoriales</a></li>
-                      </ul>
-                    </li>
-
-                    <li class=""> <a href="#" class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i>
-                      <span class="hide-menu">Configuraciones</span></a>
-                      <ul class="nav nav-second-level">
-                          <li><a href="{{ url('subsistemaplanificacion/programamefpdes') }}">Programas MEF - PDES</a></li>
-                      </ul>
-                    </li>
 
 
+                    @foreach($menu as $m)
+                      <li class="">
+                        @if( $m["submenus"] )
+                          <a id="{{ $m["id_html"] }}" href="#" class="waves-effect"><i data-icon="{{ $m["icono"] }}" class="linea-icon linea-basic fa-fw"></i>
+                              <span class="hide-menu"> {{ $m["titulo"] }} </span>
+                          </a>
+                          <ul class="nav nav-second-level">
+                              @foreach($m["submenus"] as $sm)
+                                <li id="{{ $sm->id }}" ><a href="{{ $sm->url }}">{{ $sm->titulo }}</a></li>
+                              @endforeach
+                          </ul>
+                        @else
+                          <a id="{{ $m["id_html"] }}" href="{{ url( $m["url"] ) }} " class="waves-effect"><i data-icon="{{ $m["icono"] }}" class="linea-icon linea-basic fa-fw" ></i>
+                          <span class="hide-menu"> {{ $m["titulo"] }} <span class="fa arrow"></span> </span></a>
+                        @endif
+                      </li>
+                    @endforeach
 
 
 

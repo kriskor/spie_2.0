@@ -23,7 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+       $sql = \DB::select("SELECT *
+                          FROM users_modulos um
+                          INNER JOIN modulos m ON um.id_modulo = m.id
+                          WHERE um.id_user = ?
+                          ORDER BY orden ASC", [\Auth::user()->id]);
+        return view('home',['modulos' => $sql]);
     }
     public function modulos()
     {

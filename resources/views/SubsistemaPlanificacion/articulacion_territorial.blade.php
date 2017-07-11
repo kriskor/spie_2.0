@@ -107,6 +107,7 @@
                                       <li><a href="javascript:void(0)">+ b) PLANES</a>
                                           <ul style='width: 250px;'>
                                               <li style="text-align: left;"><a class="" onclick="actualizarProgramas(5,'Programa')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Actualizar Programas</a></li>
+                                              <li style="text-align: left;"><a class="" onclick="nuevoPlan(5,'Programa')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Otros Programas</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(6,'Inversion')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Inversion</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(7,'Preinversion')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Preinversion</a></li>
                                               <li style="text-align: left;"><a class="" onclick="nuevoPlan(8,'Fortalecimiento')" style="width: 100px; font-size: 10px;padding: 7px 95px 7px 3px;">Fortalecimiento</a></li>

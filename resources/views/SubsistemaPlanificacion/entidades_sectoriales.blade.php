@@ -65,7 +65,7 @@
           $('#'+id).addClass('active');
       }
       $(document).ready(function(){
-          activarMenu('home',0);
+          activarMenu(2,0);
 
           var theme = 'darkblue';
           var source =

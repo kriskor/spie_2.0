@@ -15,21 +15,22 @@
                           <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                       </li>
                   </ul>
-                  <h3 class="block-title">Subsistemas del SPIE habilitados para su usuario</h3>
+                  <h3 class="block-title">Listado de subsistemas para su usuario:</h3>
               </div>
               <div class="block-content">
                   <div class="table-responsive">
                       <table class="table table-hover table-vcenter">
                           <tbody>
-                              <tr id="sub_planificacion">
+                            @foreach($modulos as $mod)
+                              <tr onclick="$(location).attr('href','{{ url($mod->url) }}');">
                                   <td class="text-center" style="width: 200px;">
                                       <div style="width: 180px;">
-                                          <img class="img-responsive" src="/assets_home/assets/img/iconos/ico_sp.png" alt="">
+                                          <img class="img-responsive" src="/assets_home/assets/img/iconos/{{ $mod->icono }}" alt="">
                                       </div>
                                   </td>
                                   <td>
-                                      <h4>Subsistema de Planificacion</h4>
-                                      <p class="remove-margin-b">Gestion de Planes Sectoriales y Territoriales</p>
+                                      <h4>{{ $mod->titulo }}</h4>
+                                      <p class="remove-margin-b">{{ $mod->descripcion }}</p>
                                       <a class="font-w600" href="javascript:void(0)"></a>
                                   </td>
 
@@ -43,7 +44,7 @@
 
                                   </td>
                               </tr>
-
+                            @endforeach
 
 
 
@@ -73,9 +74,6 @@
       }
       $(document).ready(function(){
           activarMenu('home',0);
-          $("#sub_planificacion").on('click', function () {
-              $(location).attr('href','{{ url('/subsistemaplanificacion/dashboard') }}');
-           });
 
 
       });

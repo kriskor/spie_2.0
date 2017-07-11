@@ -215,18 +215,18 @@
 
                             <li id="home">
                                 <a href="{{ url('/home') }}">
-                                    <i class="fa fa-briefcase push-5-r"></i>Sub-sistemas
+                                    <i class="fa fa-briefcase push-5-r"></i>Sub-Sistemas
                                 </a>
                             </li>
-                            <li id="modulos">
+                            {{-- <li id="modulos">
                                 <a href="{{ url('/modulos') }}">
                                     <i class="fa fa-briefcase push-5-r"></i>Modulos
                                 </a>
-                            </li>
+                            </li> --}}
 
                             <li id="configuracion">
                                 <a href="bd_settings.html">
-                                    <i class="fa fa-cog push-5-r"></i>Configuracion
+                                    <i class="fa fa-cog push-5-r"></i>Configuración
                                 </a>
                             </li>
 

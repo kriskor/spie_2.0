@@ -213,6 +213,7 @@
           $('#'+id).addClass('active');
       }
       $(document).ready(function(){
+        activarMenu(3,0);
         var theme = 'light';
         var source =
         {

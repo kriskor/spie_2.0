@@ -38,7 +38,7 @@
           $('#'+id).addClass('active');
       }
       $(document).ready(function(){
-          activarMenu('home',0);
+          activarMenu(1,0);
           $("#sub_planificacion").on('click', function () {
               $(location).attr('href','{{ url('/planificacion/dashboard') }}');
            });

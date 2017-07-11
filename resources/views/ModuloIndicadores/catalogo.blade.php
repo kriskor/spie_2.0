@@ -117,21 +117,14 @@
 
 
 
-
-
-
-
-
-
-
                               </div>
                           </div>
-                          <div class="col-sm-9 ">
+                          <div class="col-sm-9">
                             <h3 class="box-title panel panel-default"><i class="ti-settings"></i> Datos generales </h3>
                               <div class="well">
                                   <div class="row">
                                       <div class="col-lg-5 col-sm-5 col-xs-12 m-t-10">
-                                          <h3 class="box-title m-b-0 m-t-5 text-success"><i class="fa fa-caret-right text-danger"></i>Descripcion PDES</h3>
+                                          <h3 class="box-title m-b-0 m-t-5 text-success"><i class="fa fa-caret-right text-danger"></i> Descripcion PDES </h3>
                                           <div class="col-lg-12 col-sm-12 col-xs-12 m-t-10">
                                               <h3 id="tit_pilar" class="m-b-0 box-title">Pilar</h3>
                                               <p id="desc_pilar" class="text-muted">...</p>
