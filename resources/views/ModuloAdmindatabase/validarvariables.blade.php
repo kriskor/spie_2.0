@@ -78,6 +78,7 @@
                     </div>
                     <div class="col-lg-7 col-md-7">
                       <div id="menuauxcontenido" class="row-fluid" style="visibility: hidden;">
+                        <h5>El valor del campo VALOR ORIGEN sera reemplazado por el valor que exista en el campo VALOR OFICIAL CLASIFICADOR</h5>
                         <div id='jqxMenu'>
                           <ul>
                             <li><a href="#">+<img alt=":" title="Dashboard" src="/assets_admin_three/img/gear.png" style="height: 25px;" align="absmiddle"/>Validador</a>
@@ -440,7 +441,7 @@
 
             swal({
               title: "Está seguro de aplicar los cambios?",
-              text: "Se actualizara la información con los datos del panel!",
+              text: "Se actualizara la información con los datos del panel! si no realizo la configuracion de los datos correctamente se perderan los datos originales.",
               type: "warning",
               showCancelButton: true,
               confirmButtonColor: "#DD6B55",
