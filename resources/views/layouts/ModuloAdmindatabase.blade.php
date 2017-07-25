@@ -112,6 +112,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <li> <a href="{{ url('/admindatabase/otros') }}">Otros</a> </li>
                         </ul>
                     </li>
+                    <li> <a href="{{ url('/admindatabase/crearvalidadores') }}" class="waves-effect"><i class="ti-menu-alt fa-fw"></i> <span class="hide-menu">Crear Validadores</span></a> </li>
 
                     <li class="nav-small-cap m-t-10">--- Variables</li>
                     <li> <a href="index.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw" ></i> <span class="hide-menu"> Variables <span class="fa arrow"></span> </span></a>

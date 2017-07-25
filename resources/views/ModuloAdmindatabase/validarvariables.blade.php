@@ -131,11 +131,14 @@
 
               <select id="clasificador_sel" name="clasificador_sel" >
                     <option value=""></option>
-                    <option value="clasificador_entidades">Clasificador_Entidades</option>
+                    @foreach($validadores as $val)
+                        <option value="{{$val->nombre_clasificador}}">{{$val->titulo}}
+                       </option>
+                    @endforeach
+                    {{-- <option value="clasificador_entidades">Clasificador_Entidades</option>
                     <option value="clasificador_departamentos">Clasificador_Departamentos</option>
                     <option value="clasificador_provincias">Clasificador_Provincias</option>
-                    <option value="clasificador_municipios">Clasificador_Municipios</option>
-
+                    <option value="clasificador_municipios">Clasificador_Municipios</option> --}}
               </select>
               <div style="float: right">
                   <input type="button" value="Iniciar" style="margin-bottom: 5px;" id="searchTextButton" /><br />

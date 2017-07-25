@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\ModuloAdmindatabase\VariableEstadistica;
 use App\ModuloAdmindatabase\VariableEstadisticaDimension;
 use App\ModuloAdmindatabase\Valor;
+use App\ModuloAdmindatabase\Validador;
 
 class VariablesController extends Controller
 {
@@ -27,8 +28,9 @@ class VariablesController extends Controller
    */
   public function index()
   {
+    $validadores = Validador::get();
     $variables = VariableEstadistica::where('activo', true)->get();
-    return view('ModuloAdmindatabase.validarvariables',['variables'=>$variables]);
+    return view('ModuloAdmindatabase.validarvariables',['variables'=>$variables,'validadores'=>$validadores]);
   }
   public function listaDimensionesVarEstadistica(Request $request)
   {
@@ -86,11 +88,39 @@ class VariablesController extends Controller
         $i=1;
        foreach ($result as $r) {
 
-            $sql ="SELECT *
-            FROM be_vista_".$clasificadorSel."
-            WHERE substr(nombre_sinonimo,1,1) = ?
-            AND nombre_sinonimo = ?";
-            $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8'))]);
+           if($sw==1){
+
+             $origen_referencia = $r->origen_referencia;
+             $sql ="SELECT *
+             FROM be_vista_".$clasificadorSel."
+             WHERE substr(nombre_sinonimo,1,1) = ?
+             AND nombre_sinonimo = ?
+             AND padre = ?";
+             $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8')),trim(mb_strtoupper($r->origen_referencia,'utf-8'))]);
+
+           }elseif($sw==2){
+
+             $origen_referencia = $r->r_departamento."/".$r->r_provincia;
+
+             $sql ="SELECT *
+             FROM be_vista_".$clasificadorSel."
+             WHERE substr(nombre_sinonimo,1,1) = ?
+             AND nombre_sinonimo = ?
+             AND padre = ?";
+             $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8')),trim(mb_strtoupper(($r->r_departamento."-".$r->r_provincia),'utf-8'))]);
+
+           }elseif ($sw==0) {
+
+             $sql ="SELECT *
+             FROM be_vista_".$clasificadorSel."
+             WHERE substr(nombre_sinonimo,1,1) = ?
+             AND nombre_sinonimo = ?";
+             $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8'))]);
+
+           }
+
+
+
                         $id_resultado="";
                         $nom_resultado ="";
                        if(count($resultC) == 1){
@@ -111,13 +141,9 @@ class VariablesController extends Controller
 
                        }
 
-                       if($sw==1){
-                         $origen_referencia = $r->origen_referencia;
-                       }elseif($sw==2){
-                         $origen_referencia = $r->r_departamento."/".$r->r_provincia;
-                       }
 
-                
+
+
                 $datosV[$i] = array(
                           'id_valor' => $i,
                           'origen_referencia' => $origen_referencia,

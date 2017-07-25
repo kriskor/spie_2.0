@@ -68,6 +68,7 @@ Route::get('/admindatabase/dashboard', 'ModuloAdmindatabase\DashboardController@
 Route::get('/admindatabase/entidades', 'ModuloAdmindatabase\EntidadesController@index');
 Route::get('/admindatabase/regiones', 'ModuloAdmindatabase\RegionesController@index');
 Route::get('/admindatabase/otros', 'ModuloAdmindatabase\OtrosController@index');
+Route::get('/admindatabase/crearvalidadores', 'ModuloAdmindatabase\ClasificadoresController@crearValidadores');
 
 
 
@@ -85,6 +86,10 @@ Route::get('/admindatabase/ajax/listasinonimosentidad', 'ModuloAdmindatabase\Ent
 Route::post('/admindatabase/ajax/addsinonimo', 'ModuloAdmindatabase\EntidadesController@addSinonimoEntidad');
 Route::put('/admindatabase/ajax/updatesinonimo', 'ModuloAdmindatabase\EntidadesController@updateSinonimoEntidad');
 Route::delete('/admindatabase/ajax/deletesinonimo', 'ModuloAdmindatabase\EntidadesController@deleteSinonimoEntidad');
+
+
+Route::post('/admindatabase/guardarvalidador', 'ModuloAdmindatabase\ClasificadoresController@guardarNuevoValidador');
+Route::get('/admindatabase/eliminarvalidador/{id}', 'ModuloAdmindatabase\ClasificadoresController@eliminarValidador');
 
 //-------REGIONES
 

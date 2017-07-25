@@ -124,7 +124,10 @@
                 source: dataAdapterP,
                 theme:theme,
                 columnsResize: true,
+                filterable: true,
+                //filterMode: 'simple',
                 pageable: true,
+                pageSize: 500,
                 editable: true,
                 showToolbar: true,
                 altRows: true,
@@ -252,7 +255,7 @@
                 columns: [
                   { text: 'id', editable: false, dataField: 'id', width: 50 },
                   { text: 'Nombre del clasificador', dataField: 'nombre', align:'center', width: 650},
-                  { text: 'descripcion', dataField: 'descripcion', cellsAlign: 'left', align: 'center'}
+                  { text: 'Tipo Clasificador', dataField: 'descripcion', cellsAlign: 'left', align: 'center'}
                 ]
             });
           $("#padreGrid").on('rowClick', function (event) {

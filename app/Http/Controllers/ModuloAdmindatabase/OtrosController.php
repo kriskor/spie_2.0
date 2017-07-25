@@ -46,9 +46,20 @@ class OtrosController extends Controller
   {
     if($request->ajax()) {
       $otro = Otro::find($request->id) ;
+
+      if($otro->nombre == ""){
+        $sinonimo = new OtroSinonimo;
+        $sinonimo->sinonimo =$request->nombre;
+        $sinonimo->id_otro = $request->id;
+        $sinonimo->save();
+      }
+
       $otro->nombre = $request->nombre;
       $otro->descripcion = $request->descripcion;
       $otro->save();
+
+
+
       return \Response::json(1);
     }
   }
