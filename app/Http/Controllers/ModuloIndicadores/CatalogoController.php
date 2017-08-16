@@ -173,7 +173,7 @@ class CatalogoController extends Controller
            $indicador->fuente_informacion = $request->fuente_informacion;
 
            $indicador->linea_base_gestion = (int)$request->linea_base_gestion;
-           $indicador->linea_base_valor = (int)$request->linea_base_valor;
+           $indicador->linea_base_valor = ($request->linea_base_valor!="")?$request->linea_base_valor:0;
            $indicador->linea_base_unidad = $request->linea_base_unidad;
            $indicador->linea_base_descripcion = $request->linea_base_descripcion;
            $indicador->linea_base_fuente_alternativa = $request->linea_base_fuente_alternativa;
@@ -240,7 +240,7 @@ class CatalogoController extends Controller
            $indicador->fuente_informacion = $request->mod_fuente_informacion;
 
            $indicador->linea_base_gestion = (int) $request->mod_linea_base_gestion;
-           $indicador->linea_base_valor = (int) $request->mod_linea_base_valor;
+           $indicador->linea_base_valor = ($request->mod_linea_base_valor!="")?$request->mod_linea_base_valor:0;
            $indicador->linea_base_unidad = $request->mod_linea_base_unidad;
            $indicador->linea_base_descripcion = $request->mod_linea_base_descripcion;
            $indicador->linea_base_fuente_alternativa = $request->mod_linea_base_fuente_alternativa;
