@@ -171,6 +171,13 @@ class CatalogoController extends Controller
            $indicador = new Indicador;
            $indicador->nombre = $request->indicador_nombre;
            $indicador->fuente_informacion = $request->fuente_informacion;
+
+           $indicador->linea_base_gestion = $request->linea_base_gestion;
+           $indicador->linea_base_valor = $request->linea_base_valor;
+           $indicador->linea_base_unidad = $request->linea_base_unidad;
+           $indicador->linea_base_descripcion = $request->linea_base_descripcion;
+           $indicador->linea_base_fuente_alternativa = $request->linea_base_fuente_alternativa;
+
            $indicador->estado = true;
            $indicador->save();
            $idIndicador =  $indicador->id_indicador;
@@ -231,6 +238,12 @@ class CatalogoController extends Controller
            $indicador = Indicador::find($request->mod_id_indicador);
            $indicador->nombre = $request->mod_indicador_nombre;
            $indicador->fuente_informacion = $request->mod_fuente_informacion;
+           $indicador->linea_base_gestion = $request->mod_linea_base_gestion;
+           $indicador->linea_base_valor = $request->mod_linea_base_valor;
+           $indicador->linea_base_unidad = $request->mod_linea_base_unidad;
+           $indicador->linea_base_descripcion = $request->mod_linea_base_descripcion;
+           $indicador->linea_base_fuente_alternativa = $request->mod_linea_base_fuente_alternativa;
+
            $indicador->save();
            $ResIndicador = ResultadoIndicador::find($request->mod_id_resultado_indicador);;
            $ResIndicador->punto_medicion = $request->mod_etapa_indicador;

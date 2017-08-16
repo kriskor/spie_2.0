@@ -91,23 +91,40 @@ class VariablesController extends Controller
            if($sw==1){
 
              $origen_referencia = $r->origen_referencia;
-             $sql ="SELECT *
-             FROM be_vista_".$clasificadorSel."
-             WHERE substr(nombre_sinonimo,1,1) = ?
-             AND nombre_sinonimo = ?
-             AND padre = ?";
-             $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8')),trim(mb_strtoupper($r->origen_referencia,'utf-8'))]);
+             if($r->origen_referencia != ""){
+                 $sql ="SELECT *
+                 FROM be_vista_".$clasificadorSel."
+                 WHERE substr(nombre_sinonimo,1,1) = ?
+                 AND nombre_sinonimo = ?
+                 AND padre = ?";
+                 $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8')),trim(mb_strtoupper($r->origen_referencia,'utf-8'))]);
+             }else {$sql ="SELECT *
+                 FROM be_vista_".$clasificadorSel."
+                 WHERE substr(nombre_sinonimo,1,1) = ?
+                 AND nombre_sinonimo = ?";
+                 $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8'))]);
+             }
 
            }elseif($sw==2){
 
              $origen_referencia = $r->r_departamento."/".$r->r_provincia;
 
-             $sql ="SELECT *
-             FROM be_vista_".$clasificadorSel."
-             WHERE substr(nombre_sinonimo,1,1) = ?
-             AND nombre_sinonimo = ?
-             AND padre = ?";
-             $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8')),trim(mb_strtoupper(($r->r_departamento."-".$r->r_provincia),'utf-8'))]);
+             if($r->r_departamento !="" AND $r->r_provincia !=""){
+               $sql ="SELECT *
+               FROM be_vista_".$clasificadorSel."
+               WHERE substr(nombre_sinonimo,1,1) = ?
+               AND nombre_sinonimo = ?
+               AND padre = ?";
+               $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8')),trim(mb_strtoupper(($r->r_departamento."-".$r->r_provincia),'utf-8'))]);
+             }else{
+               $sql ="SELECT *
+               FROM be_vista_".$clasificadorSel."
+               WHERE substr(nombre_sinonimo,1,1) = ?
+               AND nombre_sinonimo = ?";
+               $resultC = \DB::connection('dbestadistica')->select($sql, [$r->letra,trim(mb_strtoupper($r->campo_original,'utf-8'))]);
+             }
+
+
 
            }elseif ($sw==0) {
 

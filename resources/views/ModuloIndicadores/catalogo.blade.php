@@ -221,7 +221,7 @@
 
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active nav-item"><a href="#datos_indicador" class="nav-link" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Datos generales</span></a></li>
-                                <!--li role="presentation" class="nav-item"><a href="#linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li-->
+                                <li role="presentation" class="nav-item"><a href="#linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li>
 
                             </ul>
 
@@ -280,27 +280,34 @@
                                 <div role="tabpanel" class="tab-pane" id="linea_base">
                                     <div class="col-md-12">
                                       <div class="form-group row">
-                                          <label for="example-url-input" class="col-2 col-form-label">Tiempo</label>
+                                          <label for="example-url-input" class="col-2 col-form-label">gestion</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text"  placeholder="Tiempo" id="" name="">
+                                              <input class="form-control" type="text"  placeholder="Gestión" id="linea_base_gestion" name="linea_base_gestion">
                                           </div>
                                       </div>
                                       <div class="form-group row">
                                           <label for="example-url-input" class="col-2 col-form-label">Valor</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text"  placeholder="Valor"id="" name="">
+                                              <input class="form-control" type="text"  placeholder="Valor" id="linea_base_valor" name="linea_base_valor">
                                           </div>
                                       </div>
                                       <div class="form-group row">
                                           <label for="example-url-input" class="col-2 col-form-label">Unidad de Medida</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text" placeholder="Unidad de Medida" id="" name="">
+                                              <input class="form-control" type="text" placeholder="Unidad de Medida" id="linea_base_unidad" name="linea_base_unidad">
                                           </div>
                                       </div>
                                       <div class="form-group row">
-                                          <label for="example-url-input" class="col-2 col-form-label">Tipo</label>
+                                          <label for="example-url-input" class="col-2 col-form-label">Descripcion</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text" placeholder="Tipo" id="" name="">
+                                              <textarea class="form-control" placeholder="Descripcion de linea base" rows="2" id="linea_base_descripcion" name="linea_base_descripcion"></textarea>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="example-url-input" class="col-2 col-form-label">Fuente de datos alternativa</label>
+                                          <div class="col-10">
+                                              <textarea class="form-control" placeholder="Fuente de datos alternativa" rows="2" id="linea_base_fuente_alternativa" name="linea_base_fuente_alternativa"></textarea>
                                           </div>
                                       </div>
                                     </div>
@@ -358,8 +365,9 @@
 
 
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active nav-item"><a href="#mod_datos_indicador" class="nav-link" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Datos generales</span></a></li>
-                                <!--li role="presentation" class="nav-item"><a href="#mod_linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li-->
+                                <li role="presentation" class="active nav-item"><a href="#mod_datos_indicador" class="nav-link" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="ti-home"></i></span><span class="hidden-xs"> Datos generales</span></a>
+                                </li>
+                                <li role="presentation" class="nav-item"><a href="#mod_linea_base" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="ti-user"></i></span> <span class="hidden-xs">Linea Base</span></a></li>
 
                             </ul>
 
@@ -415,27 +423,34 @@
                                 <div role="tabpanel" class="tab-pane" id="mod_linea_base">
                                     <div class="col-md-12">
                                       <div class="form-group row">
-                                          <label for="example-url-input" class="col-2 col-form-label">Tiempo</label>
+                                          <label for="example-url-input" class="col-2 col-form-label">gestion</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text"  placeholder="Tiempo" id="" name="">
+                                              <input class="form-control" type="text"  placeholder="Gestión" id="mod_linea_base_gestion" name="mod_linea_base_gestion">
                                           </div>
                                       </div>
                                       <div class="form-group row">
                                           <label for="example-url-input" class="col-2 col-form-label">Valor</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text"  placeholder="Valor"id="" name="">
+                                              <input class="form-control" type="text"  placeholder="Valor" id="mod_linea_base_valor" name="mod_linea_base_valor">
                                           </div>
                                       </div>
                                       <div class="form-group row">
                                           <label for="example-url-input" class="col-2 col-form-label">Unidad de Medida</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text" placeholder="Unidad de Medida" id="" name="">
+                                              <input class="form-control" type="text" placeholder="Unidad de Medida" id="mod_linea_base_unidad" name="mod_linea_base_unidad">
                                           </div>
                                       </div>
                                       <div class="form-group row">
-                                          <label for="example-url-input" class="col-2 col-form-label">Tipo</label>
+                                          <label for="example-url-input" class="col-2 col-form-label">Descripcion</label>
                                           <div class="col-10">
-                                              <input class="form-control" type="text" placeholder="Tipo" id="" name="">
+                                              <textarea class="form-control" placeholder="Descripcion de linea base" rows="2" id="mod_linea_base_descripcion" name="mod_linea_base_descripcion"></textarea>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row">
+                                          <label for="example-url-input" class="col-2 col-form-label">Fuente de datos alternativa</label>
+                                          <div class="col-10">
+                                              <textarea class="form-control" placeholder="Fuente de datos alternativa" rows="2" id="mod_linea_base_fuente_alternativa" name="mod_linea_base_fuente_alternativa"></textarea>
                                           </div>
                                       </div>
                                     </div>
@@ -1131,6 +1146,13 @@
                               $('textarea[name="mod_indicador_nombre"]').val(data.nombre);
                               $('select[name="mod_etapa_indicador"]').val(data.punto_medicion);
                               $('textarea[name="mod_fuente_informacion"]').val(data.fuente_informacion);
+
+                              $('input[name="mod_linea_base_gestion"]').val(data.linea_base_gestion);
+                              $('input[name="mod_linea_base_valor"]').val(data.linea_base_valor);
+                              $('input[name="mod_linea_base_unidad"]').val(data.linea_base_unidad);
+
+                              $('textarea[name="mod_linea_base_descripcion"]').val(data.linea_base_descripcion);
+                              $('textarea[name="mod_linea_base_fuente_alternativa"]').val(data.linea_base_fuente_alternativa);
                           });
                         },
                         error:function(data){
