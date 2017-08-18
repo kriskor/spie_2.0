@@ -69,6 +69,7 @@ Route::get('/admindatabase/entidades', 'ModuloAdmindatabase\EntidadesController@
 Route::get('/admindatabase/regiones', 'ModuloAdmindatabase\RegionesController@index');
 Route::get('/admindatabase/otros', 'ModuloAdmindatabase\OtrosController@index');
 Route::get('/admindatabase/crearvalidadores', 'ModuloAdmindatabase\ClasificadoresController@crearValidadores');
+Route::get('/admindatabase/paises', 'ModuloAdmindatabase\PaisesController@index');
 
 
 
@@ -122,6 +123,20 @@ Route::get('/admindatabase/ajax/listasinonimosotro', 'ModuloAdmindatabase\OtrosC
 Route::post('/admindatabase/ajax/addsinonimootro', 'ModuloAdmindatabase\OtrosController@addSinonimoOtro');
 Route::put('/admindatabase/ajax/updatesinonimootro', 'ModuloAdmindatabase\OtrosController@updateSinonimoOtro');
 Route::delete('/admindatabase/ajax/deletesinonimootro', 'ModuloAdmindatabase\OtrosController@deleteSinonimoOtro');
+
+
+///---------------------Paises
+Route::get('/admindatabase/ajax/listapaises', 'ModuloAdmindatabase\PaisesController@listaPaises');
+Route::get('/admindatabase/ajax/listasinonimospais', 'ModuloAdmindatabase\PaisesController@listaSinonimosPais');
+Route::post('/admindatabase/ajax/addsinonimo', 'ModuloAdmindatabase\PaisesController@addSinonimoPais');
+Route::put('/admindatabase/ajax/updatesinonimo', 'ModuloAdmindatabase\PaisesController@updateSinonimoPais');
+Route::delete('/admindatabase/ajax/deletesinonimo', 'ModuloAdmindatabase\PaisesController@deleteSinonimoPais');
+Route::post('/admindatabase/ajax/detallepais', 'ModuloAdmindatabase\PaisesController@detallePais');
+
+
+Route::post('/admindatabase/ajax/guardarpais', 'ModuloAdmindatabase\PaisesController@store');
+Route::post('/admindatabase/ajax/modificarpais', 'ModuloAdmindatabase\PaisesController@modificarPais');
+Route::delete('/admindatabase/ajax/eliminarpais', 'ModuloAdmindatabase\PaisesController@eliminarPais');
 
 
 //////////-------------VARIABLES ESTADISTICAS

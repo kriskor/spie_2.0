@@ -109,7 +109,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-second-level">
                             <li> <a href="{{ url('/admindatabase/entidades') }}">Entidades</a> </li>
                             <li> <a href="{{ url('/admindatabase/regiones') }}">Regiones</a> </li>
+                            <li> <a href="{{ url('/admindatabase/paises') }}">Paises</a> </li>
                             <li> <a href="{{ url('/admindatabase/otros') }}">Otros</a> </li>
+
                         </ul>
                     </li>
                     <li> <a href="{{ url('/admindatabase/crearvalidadores') }}" class="waves-effect"><i class="ti-menu-alt fa-fw"></i> <span class="hide-menu">Crear Validadores</span></a> </li>
