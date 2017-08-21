@@ -96,6 +96,8 @@
                             </li>
                             <li><a id="v_guardar_aplicar"  href="#">+<img alt=":" title="Dashboard" src="/assets_admin_three/img/upload.png" style="height: 25px;" align="absmiddle"/>Guardar y Aplicar Validacion</a>
                             </li>
+                            <li><a id="v_copiar_valor"  href="#">+<img alt=":" title="Dashboard" src="/assets_admin_three/img/copy.png" style="height: 25px;" align="absmiddle"/>Copiar Valor(F4)</a>
+                            </li>
 
                           </ul>
                         </div>
@@ -496,6 +498,30 @@
                   alert("Seleccione un registro.");
             }
 
+          });
+
+          $('#v_copiar_valor').click(function() {
+
+
+          });
+          $(document).keydown(function(e) {
+            if(e.which == 115){
+              var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+              var rows = $("#jqxgrid").jqxGrid('selectedrowindexes');
+              if (rowindex > -1){
+
+                var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rows);
+
+
+              var $temp = $("<input>")
+                $("body").append($temp);
+                $temp.val(dataRecord.campo_original).select();
+                document.execCommand("copy");
+                $temp.remove();
+              }else{
+                    alert("Seleccione un registro para copiar al porta-papeles.");
+              }
+            }
           });
 
       });
