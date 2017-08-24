@@ -195,3 +195,11 @@ Route::group(
 
     }
 );
+Route::group(
+    array('prefix' => 'modulopdes'),
+    function() {
+            Route::get('dashboard', 'ModuloPdes\DashboardController@index');
+            Route::get('tableropdes', 'ModuloPdes\DashboardController@tableroPdes');
+
+    }
+);

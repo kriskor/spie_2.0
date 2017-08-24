@@ -1287,10 +1287,12 @@
                   $('#indicador_nombre_sel').val('');
                   $('#id_indicador_sel').val('');
                   //$('input[name="indicador_nombre"]').addClass('hide');
+                    $('#indicador_nombre').removeAttr("required");
 
                 } else {
                   $('#indicador_nombre_sel').hide();
                   $('#indicador_nombre').show();
+                  $('#indicador_nombre').prop("required", true);
                   $('textarea[name="fuente_informacion"]').val('');
                 }
               });
