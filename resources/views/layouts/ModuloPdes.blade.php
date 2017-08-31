@@ -81,19 +81,15 @@
                         </div>
                         <!-- /input-group -->
                     </li> --}}
-                    <li> <a href=" {{url ('/modulopdes/dashboard') }} " class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Dashboard</span></a> </li>
+                    <li> <a href="{{url ('/modulopdes/dashboard')}} " class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">DASHBOARD</span></a> </li>
 
-                    <li> <a href="index.html" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> GESTION DE INDICADORES <span class="fa arrow"></span> </span></a>
+                    <li> <a href="{{url ('/modulopdes/tableroindicadores') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> INDICADORES <span class="fa arrow"></span> </span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href="{{url ('/modulopdes/tableroindicadores') }}">TABLERO</a> </li>
                             <li> <a href="javascript:void(0)">AGREGAR AVANCE</a> </li>
                         </ul>
                     </li>
-                    <li> <a href="index.html" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> ADMINISTRACION <span class="fa arrow"></span> </span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="javascript:void(0)">CLASIFICAR RESULTADOS</a> </li>
-                        </ul>
-                    </li>
+
 
 
 

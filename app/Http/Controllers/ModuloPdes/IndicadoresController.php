@@ -39,14 +39,14 @@ class IndicadoresController extends Controller
   {
 
    if($request->ajax()) {
-        $pilares = Pilar::orderBy('cod_p','asc')->get();
+        $pilares = Pilar::select("id", \DB::raw("'P'||cod_p as nombre"))->orderBy('cod_p','asc')->get();
         return \Response::json($pilares);
     }
   }
   public function listarMetas(Request $request)
   {
    if($request->ajax()) {
-        $metas = Meta::orderBy('cod_m','asc')->get();
+        $metas = Meta::select("id", \DB::raw("'M'||cod_m as nombre"),"pilar")->orderBy('cod_m','asc')->get();
         return \Response::json($metas);
     }
   }
@@ -54,7 +54,7 @@ class IndicadoresController extends Controller
   {
 
    if($request->ajax()) {
-        $resultados = Resultado::orderBy('cod_r','asc')->get();
+        $resultados = Resultado::select("id", \DB::raw("'R'||cod_r as nombre"),"meta")->orderBy('cod_r','asc')->get();
         return \Response::json($resultados);
     }
   }

@@ -16,9 +16,84 @@
             <li class="active">Indicadores</li>
         </ol>
     </div>
+
     <!-- /.col-lg-12 -->
 </div>
+<!--row -->
 <div class="row">
+    <div class="col-lg-12">
+        <div class="white-box p-10">
+          <div class="row">
+             <div class="col-lg-3 btn-group">
+                 <div>
+                 <button id="clear_filtro_pdes" type="button" class="btn btn-sm btn-info btn-circle">
+                   <i class="fa ti-reload"></i>
+                 </button>
+                 </div>
+                <div  id="pilares"></div>
+                <div id="metas"></div>
+                <div id="resultados"></div>
+                <div>
+                <button id="aplicar_filtro" class="btn btn-sm btn-info waves-effect waves-light">
+                  <span>Aplicar</span> <i class="fa fa-filter m-l-5"></i>
+                </button>
+                </div>
+
+             </div>
+
+             <div id="desc_resultado" class="col-lg-9 list-group-item-warning font-normal "> </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!--row -->
+<div class="row">
+    <div class="col-lg-4 col-md-12 ">
+        <div class="white-box p-10">
+
+            <h3 class="box-title">Lista de Indicadores
+              <button id="graficar" class="btn btn-sm btn-info waves-effect waves-light pull-right">
+              <span>Graficar</span> <i class="fa fa-bar-chart-o m-l-5"></i>
+              </button>
+            </h3>
+
+            <div id="jqxgrid"></div>
+
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-12 ">
+        <div class="white-box p-10">
+            <h3 class="box-title">Grafica de indicadores</h3>
+            <div style="height: 350px;">
+
+
+            </div>
+        </div>
+    </div>
+    {{-- <div class="col-lg-12 col-md-12 ">
+        <div class="white-box">
+            <h3 class="box-title">Grafica progreso de Indicador</h3>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <h6>Usage</h6> <b>60GB</b></div>
+                <div class="stat-item">
+                    <h6>Space</h6> <b>320 GB</b></div>
+                <div class="stat-item">
+                    <h6>CPU</h6> <b>50%</b></div>
+            </div>
+            <div style="height: 280px;">
+                <div id="placeholder" class="demo-placeholder"></div>
+            </div>
+        </div>
+    </div> --}}
+
+</div>
+<!-- /.row -->
+
+
+
+{{-- <div class="row">
     <div class="col-md-12">
         <div class="white-box ">
 
@@ -54,7 +129,8 @@
           </div>
         </div>
     </div>
-</div>
+</div> --}}
+
 @endsection
 
 
@@ -106,7 +182,7 @@
         source: pilaresAdapter,
         width: '100%',
         height: 25,
-        promptText: "Seleccionar pilar...",
+        promptText: "PILAR",
         displayMember: 'nombre',
         valueMember: 'id'
       });
@@ -127,7 +203,7 @@
         width: '100%',
         height: 25,
         disabled: true,
-        promptText: "Seleccionar meta...",
+        promptText: "META",
         displayMember: 'nombre',
         valueMember: 'id'
       });
@@ -149,7 +225,7 @@
         height: 25,
         disabled: false,
         source: resultadosAdapter,
-        promptText: "Seleccionar resultado...",
+        promptText: "Resultado",
         displayMember: 'nombre',
         valueMember: 'id'
       });
@@ -232,6 +308,80 @@
 
       });
 
+
+
+
+      //Configuracion de Grid Lista Indicadores
+      $('#aplicar_filtro').click(function() {
+        var idR = $("#resultados").val();
+        $.ajax({
+                url: "{{ url('/moduloindicadores/ajax/datosresultado') }}",
+                data: { 'resultado': idR },
+                type: "GET",
+                dataType: 'json',
+                success: function(date){
+                  $.each(date, function(i, data) {
+                        $("#desc_resultado").html(data.pilar_nombre+": "data.pilar_desc+"<br/>"+data.meta_nombre+": "
+data.meta_desc+"<br/>"+data.nombre+": "+data.descripcion);
+                  });
+                },
+                error:function(data){
+                  console("Error recuperar los datos.");
+                }
+            });
+          if(idR){
+              var source =
+              {
+                  dataType: "json",
+                  dataFields: [
+                    { name: 'id_indicador',type: 'number' },
+                    { name: 'id_resultado_indicador',type: 'number' },
+                    { name: 'nombre', type: 'string' },
+                    { name: 'punto_medicion', type: 'string' }
+                  ],
+                  id: 'id_resultado_indicador',
+                  data:{'resultado': idR},
+                  url: "{{ url('/moduloindicadores/ajax/listaindicadores') }}"
+              };
+              var dataAdapter = new $.jqx.dataAdapter(source);
+              $("#jqxgrid").jqxGrid({source: dataAdapter});
+          }
+
+
+       });
+
+      var theme = 'light';
+      var localizationobj = {};
+      localizationobj.loadtext = "Cargando...";
+      localizationobj.emptydatastring = "No hay registros que mostrar";
+      localizationobj.groupsheaderstring = "Arrastre una columna para que se agrupe por ella";
+      localizationobj.filterclearstring = "Limpiar";
+      localizationobj.filterstring = "Filtro";
+      localizationobj.groupbystring = "Agrupar por esta columna";
+      localizationobj.groupremovestring = "Quitar de grupos";
+      localizationobj.filterselectallstring = "(Seleccionar Todo)";
+      localizationobj.filtershowrowstring = "Mostrar filas donde:";
+      localizationobj.pagerrangestring = " de ";
+      $("#jqxgrid").jqxGrid(
+        {
+            width: '100%',
+            height: 350,
+            theme: theme,
+            filterable: true,
+            filtermode: 'excel',
+            pageable: true,
+            pagermode: 'simple',
+            pagesize: 6,
+            autorowheight:true,
+            columnsresize:true,
+            ready: function () {
+              $("#jqxgrid").jqxGrid('localizestrings', localizationobj);
+            },
+            columns: [
+              { text: 'Tipo', datafield: 'punto_medicion', width: 130},
+              { text: 'Nombre Indicador', datafield: 'nombre', columntype: 'textbox'}
+            ]
+        });
 
     });
   </script>
