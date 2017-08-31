@@ -269,7 +269,7 @@
                                       <div class="form-group row" style="background:#F7FAFC;">
                                           <label class="control-label col-sm-3">Priorizado?</label>
                                           <div class="col-sm-9">
-                                            <select name="estado_indicador" class="form-control" required>
+                                            <select name="estado_indicador" class="form-control">
                                                 <option value="">Ninguno</option>
                                                 <option value="PRIORIZADO">PRIORIZADO</option>
                                             </select>
@@ -422,7 +422,7 @@
                                       <div class="form-group row" style="background:#F7FAFC;">
                                           <label class="control-label col-sm-3">Priorizado?</label>
                                           <div class="col-sm-9">
-                                            <select name="mod_estado_indicador" class="form-control" required>
+                                            <select name="mod_estado_indicador" class="form-control">
                                                 <option value="">Ninguno</option>
                                                 <option value="PRIORIZADO">PRIORIZADO</option>
                                             </select>
