@@ -267,6 +267,16 @@
                                       </div>
 
                                       <div class="form-group row" style="background:#F7FAFC;">
+                                          <label class="control-label col-sm-3">Priorizado?</label>
+                                          <div class="col-sm-9">
+                                            <select name="estado_indicador" class="form-control" required>
+                                                <option value="">Ninguno</option>
+                                                <option value="PRIORIZADO">PRIORIZADO</option>
+                                            </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row" style="background:#F7FAFC;">
                                           <label class="control-label col-sm-3">Fuente de informacion</label>
                                           <div class="col-sm-9">
                                               <textarea name="fuente_informacion" class="form-control" placeholder="Fuente de informacion" rows="2" ></textarea>
@@ -405,6 +415,16 @@
                                                 <option value="Proceso">Proceso</option>
                                                 <option value="Producto">Producto</option>
                                                 <option value="Resultado">Resultado</option>
+                                            </select>
+                                          </div>
+                                      </div>
+
+                                      <div class="form-group row" style="background:#F7FAFC;">
+                                          <label class="control-label col-sm-3">Priorizado?</label>
+                                          <div class="col-sm-9">
+                                            <select name="mod_estado_indicador" class="form-control" required>
+                                                <option value="">Ninguno</option>
+                                                <option value="PRIORIZADO">PRIORIZADO</option>
                                             </select>
                                           </div>
                                       </div>
@@ -1145,6 +1165,7 @@
                               $('select[name="mod_resultado_asignado"]').val(data.id_resultado);
                               $('textarea[name="mod_indicador_nombre"]').val(data.nombre);
                               $('select[name="mod_etapa_indicador"]').val(data.punto_medicion);
+                              $('select[name="mod_estado_indicador"]').val(data.estado_indicador);
                               $('textarea[name="mod_fuente_informacion"]').val(data.fuente_informacion);
 
                               $('input[name="mod_linea_base_gestion"]').val(data.linea_base_gestion);

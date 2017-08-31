@@ -178,6 +178,8 @@ class CatalogoController extends Controller
            $indicador->linea_base_descripcion = $request->linea_base_descripcion;
            $indicador->linea_base_fuente_alternativa = $request->linea_base_fuente_alternativa;
 
+           $indicador->estado_indicador = $request->estado_indicador;
+
            $indicador->estado = true;
            $indicador->save();
            $idIndicador =  $indicador->id_indicador;
@@ -244,6 +246,7 @@ class CatalogoController extends Controller
            $indicador->linea_base_unidad = $request->mod_linea_base_unidad;
            $indicador->linea_base_descripcion = $request->mod_linea_base_descripcion;
            $indicador->linea_base_fuente_alternativa = $request->mod_linea_base_fuente_alternativa;
+           $indicador->estado_indicador = $request->mod_estado_indicador;
 
            $indicador->save();
            $ResIndicador = ResultadoIndicador::find($request->mod_id_resultado_indicador);;

@@ -199,7 +199,17 @@ Route::group(
     array('prefix' => 'modulopdes'),
     function() {
             Route::get('dashboard', 'ModuloPdes\DashboardController@index');
-            Route::get('tableropdes', 'ModuloPdes\DashboardController@tableroPdes');
+            Route::get('tableroindicadores', 'ModuloPdes\IndicadoresController@tableroIndicadores');
+
+    }
+);
+
+Route::group(
+    array('prefix' => 'modulopdes/ajax'),
+    function() {
+      Route::get('listarpilares', 'ModuloPdes\IndicadoresController@listarPilares');
+      Route::get('listarmetas', 'ModuloPdes\IndicadoresController@listarMetas');
+      Route::get('listarresultados', 'ModuloPdes\IndicadoresController@listarResultados');
 
     }
 );
