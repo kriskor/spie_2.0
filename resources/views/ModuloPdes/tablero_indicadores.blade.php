@@ -321,8 +321,8 @@
                 dataType: 'json',
                 success: function(date){
                   $.each(date, function(i, data) {
-                        $("#desc_resultado").html(data.pilar_nombre+": "data.pilar_desc+"<br/>"+data.meta_nombre+": "
-data.meta_desc+"<br/>"+data.nombre+": "+data.descripcion);
+                        var descripcion = data.pilar_nombre+": "+data.pilar_desc+"<br/>"+data.meta_nombre+": "+ data.meta_desc+"<br/>"+data.nombre+": "+data.descripcion;
+                        $("#desc_resultado").html(descripcion);
                   });
                 },
                 error:function(data){
