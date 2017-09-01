@@ -58,4 +58,16 @@ class IndicadoresController extends Controller
         return \Response::json($resultados);
     }
   }
+
+  public function datosGraficaIndicador(Request $request)
+  {
+    if($request->ajax()) {
+        $datos = \DB::connection('dbestadistica')
+                  ->select("SELECT t_ano as gestion, SUM(valor_cargado) as valor
+                            FROM ".$request->vista."
+                            GROUP BY gestion
+                            ORDER BY gestion ASC");
+        return \Response::json($datos);
+    }
+  }
 }

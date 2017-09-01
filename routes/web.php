@@ -210,6 +210,7 @@ Route::group(
       Route::get('listarpilares', 'ModuloPdes\IndicadoresController@listarPilares');
       Route::get('listarmetas', 'ModuloPdes\IndicadoresController@listarMetas');
       Route::get('listarresultados', 'ModuloPdes\IndicadoresController@listarResultados');
+      Route::post('datosgraficaindicador', 'ModuloPdes\IndicadoresController@datosGraficaIndicador');
 
     }
 );

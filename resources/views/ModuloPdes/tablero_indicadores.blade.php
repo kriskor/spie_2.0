@@ -3,6 +3,16 @@
 @section('header')
   <link rel="stylesheet" href="/jqwidgets4.4.0/jqwidgets/styles/jqx.base.css" type="text/css" />
   <link rel="stylesheet" href="/jqwidgets4.4.0/jqwidgets/styles/jqx.light.css" type="text/css" />
+
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+
+  <style media="screen">
+  #chartdiv {
+    width		: 100%;
+    height		: 100%;
+    font-size	: 11px;
+  }
+  </style>
 @endsection
 
 @section('content')
@@ -27,7 +37,7 @@
              <div class="col-lg-3 btn-group">
                  <div>
                  <button id="clear_filtro_pdes" type="button" class="btn btn-sm btn-info btn-circle">
-                   <i class="fa ti-reload"></i>
+                   <i class="fa fa-times"></i>
                  </button>
                  </div>
                 <div  id="pilares"></div>
@@ -66,7 +76,7 @@
         <div class="white-box p-10">
             <h3 class="box-title">Grafica de indicadores</h3>
             <div style="height: 350px;">
-
+              <div id="chartdiv"></div>
 
             </div>
         </div>
@@ -162,8 +172,18 @@
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxinput.js"></script>
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxpanel.js"></script>
 
+
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/none.js"></script>
+<script src="http://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js" type="text/javascript"></script>
+
   <script type="text/javascript">
+
+    var chartData = [];
     $(document).ready(function(){
+
 
       var pilaresSource =
       {
@@ -321,7 +341,8 @@
                 dataType: 'json',
                 success: function(date){
                   $.each(date, function(i, data) {
-                        var descripcion = data.pilar_nombre+": "+data.pilar_desc+"<br/>"+data.meta_nombre+": "+ data.meta_desc+"<br/>"+data.nombre+": "+data.descripcion;
+                        //var descripcion = "<b>"+data.pilar_nombre+"</b>: "+data.pilar_desc+"<br/>"+"<b>"+data.meta_nombre+"</b>: "+ data.meta_desc+"<br/><b>"+data.nombre+"</b>: "+data.descripcion;
+                        var descripcion = "<b>"+data.nombre+"</b>: "+data.descripcion;
                         $("#desc_resultado").html(descripcion);
                   });
                 },
@@ -337,7 +358,8 @@
                     { name: 'id_indicador',type: 'number' },
                     { name: 'id_resultado_indicador',type: 'number' },
                     { name: 'nombre', type: 'string' },
-                    { name: 'punto_medicion', type: 'string' }
+                    { name: 'punto_medicion', type: 'string' },
+                    { name: 'vista_base_estadistica', type: 'string' }
                   ],
                   id: 'id_resultado_indicador',
                   data:{'resultado': idR},
@@ -383,6 +405,98 @@
             ]
         });
 
+
+
+
+        $('#graficar').click(function() {
+          var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
+          if (rowindex > -1)
+          {
+              var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rowindex);
+              var idI = $("#resultados").val();
+              $.ajax({
+                      url: "{{url("/modulopdes/ajax/datosgraficaindicador")}}",
+                      data: { '_token': $('input[name=_token]').val(),'vista': dataRecord.vista_base_estadistica },
+                      type: "POST",
+                      dataType: 'json',
+                      success: function(date){
+                        // $.each(date, function(i, data) {
+
+                        // });
+                        chartData = [];
+                        date.forEach(function(d, i) {
+                            chartData.push({
+                                gestion: d.gestion,
+                                valor: parseInt(d.valor, 10)
+                            });
+                        });
+
+                        //Configuracion de GRAFICAAAAAAs
+                        var chart = AmCharts.makeChart( "chartdiv", {
+                        "type": "serial",
+                        "theme": "none",
+                        "dataProvider": chartData,
+                       //  "dataLoader": {
+                       //    "url": " {{ url("/modulopdes/ajax/datosgraficaindicador") }}",
+                       //    "format": "json"
+                       //  },
+                        "valueAxes": [ {
+                          "title": "Indicador nombre",
+                          "gridColor": "#FFFFFF",
+                          "gridAlpha": 0.2,
+                          "dashLength": 0
+                        } ],
+                        "gridAboveGraphs": true,
+                        "startDuration": 1,
+                        "graphs": [ {
+                          "balloonText": "[[category]]: <b>[[value]]</b>",
+                          "fillAlphas": 0.8,
+                          "lineAlpha": 0.2,
+                          "type": "column",
+                          "valueField": "valor"
+                        } ],
+                        "plotAreaFillAlphas": 0.1,
+                        "depth3D": 39,
+                        "angle": 45,
+                        "chartCursor": {
+                          "categoryBalloonEnabled": false,
+                          "cursorAlpha": 0,
+                          "zoomable": false
+                        },
+                        "categoryField": "gestion",
+                        "categoryAxis": {
+                          "gridPosition": "start",
+                          "gridAlpha": 0,
+                          "tickPosition": "start",
+                          "tickLength": 20
+                        },
+                        "export": {
+                          "enabled": true
+                        }
+
+                        } );
+
+
+                      },
+                      error:function(data){
+                        console("Error recuperar los datos.");
+                      }
+                  });
+
+            }else {
+                  alert("Seleccione un indicador.");
+            }
+
+         });
+
+
+
+
+
+
+
     });
+
+
   </script>
 @endpush
