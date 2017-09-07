@@ -91,6 +91,19 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
+        'dbsp' => [
+            'driver' => 'mysql',
+            'host' => env('DBSP_HOST', '127.0.0.1'),
+            'port' => env('DBSP_PORT', '3306'),
+            'database' => env('DBSP_DATABASE', 'forge'),
+            'username' => env('DBSP_USERNAME', 'forge'),
+            'password' => env('DBSP_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
     ],
 

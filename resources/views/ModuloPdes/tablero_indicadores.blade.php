@@ -145,9 +145,7 @@
 
 
 @push('script-head')
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/modules/data.js"></script>
+
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxcore.js"></script>
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxbuttons.js"></script>
   <script type="text/javascript" src="/jqwidgets4.4.0/jqwidgets/jqxwindow.js"></script>
@@ -384,6 +382,16 @@
       localizationobj.filterselectallstring = "(Seleccionar Todo)";
       localizationobj.filtershowrowstring = "Mostrar filas donde:";
       localizationobj.pagerrangestring = " de ";
+
+      var cellGrafIcono = function (row, columnfield, value, defaulthtml, columnproperties) {
+            var archivo = $('#jqxgrid').jqxGrid('getcellvalue', row, "vista_base_estadistica");
+            if(archivo != '' && archivo != null){
+                return '<i class="fa fa-bar-chart-o"></i>';
+            }else{
+                return '';
+            }
+
+        }
       $("#jqxgrid").jqxGrid(
         {
             width: '100%',
@@ -400,6 +408,7 @@
               $("#jqxgrid").jqxGrid('localizestrings', localizationobj);
             },
             columns: [
+              { text: '-', cellsrenderer: cellGrafIcono},
               { text: 'Tipo', datafield: 'punto_medicion', width: 130},
               { text: 'Nombre Indicador', datafield: 'nombre', columntype: 'textbox'}
             ]
@@ -412,7 +421,9 @@
           var rowindex = $('#jqxgrid').jqxGrid('getselectedrowindex');
           if (rowindex > -1)
           {
+
               var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', rowindex);
+              if(dataRecord.vista_base_estadistica != "" && dataRecord.vista_base_estadistica != null ){
               var idI = $("#resultados").val();
               $.ajax({
                       url: "{{url("/modulopdes/ajax/datosgraficaindicador")}}",
@@ -431,50 +442,7 @@
                             });
                         });
 
-                        //Configuracion de GRAFICAAAAAAs
-                        var chart = AmCharts.makeChart( "chartdiv", {
-                        "type": "serial",
-                        "theme": "none",
-                        "dataProvider": chartData,
-                       //  "dataLoader": {
-                       //    "url": " {{ url("/modulopdes/ajax/datosgraficaindicador") }}",
-                       //    "format": "json"
-                       //  },
-                        "valueAxes": [ {
-                          "title": "Indicador nombre",
-                          "gridColor": "#FFFFFF",
-                          "gridAlpha": 0.2,
-                          "dashLength": 0
-                        } ],
-                        "gridAboveGraphs": true,
-                        "startDuration": 1,
-                        "graphs": [ {
-                          "balloonText": "[[category]]: <b>[[value]]</b>",
-                          "fillAlphas": 0.8,
-                          "lineAlpha": 0.2,
-                          "type": "column",
-                          "valueField": "valor"
-                        } ],
-                        "plotAreaFillAlphas": 0.1,
-                        "depth3D": 39,
-                        "angle": 45,
-                        "chartCursor": {
-                          "categoryBalloonEnabled": false,
-                          "cursorAlpha": 0,
-                          "zoomable": false
-                        },
-                        "categoryField": "gestion",
-                        "categoryAxis": {
-                          "gridPosition": "start",
-                          "gridAlpha": 0,
-                          "tickPosition": "start",
-                          "tickLength": 20
-                        },
-                        "export": {
-                          "enabled": true
-                        }
-
-                        } );
+                        GRaficarDatos(chartData);
 
 
                       },
@@ -482,6 +450,9 @@
                         console("Error recuperar los datos.");
                       }
                   });
+              }else{
+                  GRaficarDatos(null);
+              }
 
             }else {
                   alert("Seleccione un indicador.");
@@ -489,7 +460,49 @@
 
          });
 
+    function GRaficarDatos(ele){
+      //Configuracion de GRAFICAAAAAAs
+      var chart = AmCharts.makeChart( "chartdiv", {
+      "type": "serial",
+      "theme": "none",
+      "dataProvider": ele,
 
+      "valueAxes": [ {
+        "title": "Indicador nombre",
+        "gridColor": "#FFFFFF",
+        "gridAlpha": 0.2,
+        "dashLength": 0
+      } ],
+      "gridAboveGraphs": true,
+      "startDuration": 1,
+      "graphs": [ {
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.8,
+        "lineAlpha": 0.2,
+        "type": "column",
+        "valueField": "valor"
+      } ],
+      "plotAreaFillAlphas": 0.1,
+      "depth3D": 39,
+      "angle": 45,
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "gestion",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "gridAlpha": 0,
+        "tickPosition": "start",
+        "tickLength": 20
+      },
+      "export": {
+        "enabled": true
+      }
+
+      } );
+    }
 
 
 

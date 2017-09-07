@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\ModuloPdes\Pilar;
 use App\ModuloPdes\Meta;
 use App\ModuloPdes\Resultado;
+
+use App\ModuloPdes\Proyecto;
 class IndicadoresController extends Controller
 {
   /**
@@ -67,6 +69,65 @@ class IndicadoresController extends Controller
                             FROM ".$request->vista."
                             GROUP BY gestion
                             ORDER BY gestion ASC");
+        return \Response::json($datos);
+    }
+  }
+
+
+  public function datosGraficaPilares(Request $request)
+  {
+        $datos = \DB::select("SELECT
+                            tabla.nombre as pilar,
+                            (
+                            SELECT round((tabla.total_quinquenio*100)/SUM(total_quinquenio),2)
+                            FROM mp_proyectos
+                            ) as total
+                            FROM (
+                            SELECT p.cod_p, p.nombre, SUM(total_quinquenio) as total_quinquenio
+                            FROM mp_pilares p
+                            LEFT JOIN mp_proyectos pr ON p.cod_p = pr.cod_p
+                            GROUP BY p.cod_p,p.nombre
+                            ORDER BY p.cod_p ASC
+                            ) as tabla");
+        return \Response::json($datos);
+  }
+
+  public function datosGraficaPilaresPres(Request $request)
+  {
+        $datos = \DB::select("SELECT
+                            	tabla.nombre as pilar,
+                            	tabla.total_gestion as programado,
+                              '0' as ejecutado
+                              FROM (
+                              	SELECT p.cod_p, p.nombre, SUM(gestion_2017) as total_gestion
+                              	FROM mp_pilares p
+                              	LEFT JOIN mp_proyectos pr ON p.cod_p = pr.cod_p
+                              	GROUP BY p.cod_p,p.nombre
+                              	ORDER BY p.cod_p ASC
+                              ) as tabla");
+        return \Response::json($datos);
+  }
+
+  public function datosGraficaAno(Request $request)
+  {
+    if($request->ajax()) {
+        $datos = \DB::select("SELECT sum(gestion_2017) as programado,
+                              10000000 as ejecutado,
+                              round((10000000/sum(gestion_2017)) *100, 2) as procentaje
+                              FROM mp_proyectos p
+                              ");
+        return \Response::json($datos);
+    }
+  }
+
+  public function datosGraficaQuin(Request $request)
+  {
+    if($request->ajax()) {
+        $datos = \DB::select("SELECT sum(total_quinquenio) as programado,
+                              10000000 as ejecutado,
+                              round((10000000/sum(total_quinquenio)) *100, 2) as procentaje
+                              FROM mp_proyectos p
+                              ");
         return \Response::json($datos);
     }
   }

@@ -200,6 +200,10 @@ Route::group(
     function() {
             Route::get('dashboard', 'ModuloPdes\DashboardController@index');
             Route::get('tableroindicadores', 'ModuloPdes\IndicadoresController@tableroIndicadores');
+            Route::get('entidadesporpilar', 'ModuloPdes\SpController@entidadesPorPilar');
+            Route::get('entidadespormeta', 'ModuloPdes\SpController@entidadesPorMeta');
+            Route::get('entidadesporresultado', 'ModuloPdes\SpController@entidadesPorResultado');
+            Route::get('detalleentidad', 'ModuloPdes\SpController@detalleEntidad');
 
     }
 );
@@ -211,6 +215,20 @@ Route::group(
       Route::get('listarmetas', 'ModuloPdes\IndicadoresController@listarMetas');
       Route::get('listarresultados', 'ModuloPdes\IndicadoresController@listarResultados');
       Route::post('datosgraficaindicador', 'ModuloPdes\IndicadoresController@datosGraficaIndicador');
+      Route::get('datosgraficapilares', 'ModuloPdes\IndicadoresController@datosGraficaPilares');
+      Route::get('datosgraficapilarespres', 'ModuloPdes\IndicadoresController@datosGraficaPilaresPres');
+      Route::post('datosgraficaano', 'ModuloPdes\IndicadoresController@datosGraficaAno');
+      Route::post('datosgraficaquin', 'ModuloPdes\IndicadoresController@datosGraficaQuin');
+      Route::post('totalpilaresentidades', 'ModuloPdes\SpController@totalPilaresEntidades');
+      Route::get('listapilaresentidades', 'ModuloPdes\SpController@listaPilaresEntidades');
+      Route::get('listametasentidades', 'ModuloPdes\SpController@listaMetasEntidades');
+      Route::post('totalmetasentidades', 'ModuloPdes\SpController@totalMetasEntidades');
+      Route::get('listaresultadosentidades', 'ModuloPdes\SpController@listaResultadosEntidades');
+      Route::post('totalresultadosentidades', 'ModuloPdes\SpController@totalResultadosEntidades');
+      Route::post('graficaentidadpilares', 'ModuloPdes\SpController@graficaEntidadPilares');
+      Route::post('graficaentidadmetas', 'ModuloPdes\SpController@graficaEntidadMetas');
+      Route::post('graficaentidadresultados', 'ModuloPdes\SpController@graficaEntidadResultados');
+      Route::get('detallesubentidad', 'ModuloPdes\SpController@detalleSubentidad');
 
     }
 );

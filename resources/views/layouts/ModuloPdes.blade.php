@@ -83,10 +83,20 @@
                     </li> --}}
                     <li> <a href="{{url ('/modulopdes/dashboard')}} " class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">DASHBOARD</span></a> </li>
 
-                    <li> <a href="{{url ('/modulopdes/tableroindicadores') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> INDICADORES <span class="fa arrow"></span> </span></a>
+                      <li> <a href="{{url ('/modulopdes/tableroindicadores') }} " class="waves-effect"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">INDICADORES</span></a> </li>
+
+                    {{-- <li> <a href="{{url ('/modulopdes/tableroindicadores') }}" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> INDICADORES <span class="fa arrow"></span> </span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href="{{url ('/modulopdes/tableroindicadores') }}">TABLERO</a> </li>
-                            <li> <a href="javascript:void(0)">AGREGAR AVANCE</a> </li>
+                        </ul>
+                    </li> --}}
+
+                    <li> <a href="modulopdes/index.html" class="waves-effect"><i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> ENTIDADES <span class="fa arrow"></span> </span></a>
+                        <ul class="nav nav-second-level">
+                            <li> <a href="{{url ('/modulopdes/detalleentidad') }}"> Detalle Entidad</a> </li>
+                            <li> <a href="{{url ('/modulopdes/entidadesporpilar') }}"> Por Pilares</a> </li>
+                            <li> <a href="{{url ('/modulopdes/entidadespormeta') }}"> Por Metas</a> </li>
+                            <li> <a href="{{url ('/modulopdes/entidadesporresultado') }}"> Por Resulados</a> </li>
                         </ul>
                     </li>
 
@@ -114,7 +124,7 @@
         <!-- Left navbar-header end -->
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid p-10">
+            <div class="container-fluid p-10 p-t-0">
 
 
                 @yield('content')
